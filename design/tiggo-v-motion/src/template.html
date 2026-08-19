@@ -1,154 +1,183 @@
-<title>TIGGO V Feature Reel</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<title>TIGGO V Spec Reel</title>
 <style>
+__FONTS__
+
+  /* A press-kit spread that deliberately commits to one visual world:
+     cool paper ground, ink type, a single deep-teal accent drawn from the car's paint. */
   :root{
-    --green-bg:#14400F;
-    --yellow:#F6E96B;
-    --red:#D8431F;
-    --mint:#6FE39B;
-    --crimson:#B8341B;
+    --paper:#F0F2EF;
+    --paper-2:#E4E8E4;
+    --ink:#16211F;
+    --ink-60:#4E5A57;
+    --ink-35:#8F9895;
+    --rule:rgba(22,33,31,.14);
+    --rule-strong:rgba(22,33,31,.28);
+    --accent:#0E5F5F;
+    --surround:#0E1514;
   }
   html,body{height:100%}
   body{
-    margin:0;
-    background:var(--green-bg);
-    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased;
-    overflow:hidden;
+    margin:0;background:var(--surround);
+    font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;overflow:hidden;
   }
-  #viewport{position:fixed;inset:0;display:grid;place-items:center;background:var(--green-bg);overflow:hidden}
+  #viewport{position:fixed;inset:0;display:grid;place-items:center;background:var(--surround);overflow:hidden}
   #stage{
-    position:relative;width:1600px;height:900px;overflow:hidden;
-    background:var(--green-bg);
+    position:relative;width:1920px;height:1080px;overflow:hidden;
+    background:var(--paper);color:var(--ink);
     transform:scale(var(--s,1));transform-origin:center center;
   }
 
-  /* ---------- left: yellow panel ---------- */
-  .panel{
-    position:absolute;left:100px;top:88px;width:756px;height:736px;
-    background:var(--yellow);border-radius:26px;
-    will-change:transform;
+  /* ---------- frame ---------- */
+  .rule-h{position:absolute;left:96px;right:96px;height:1px;background:var(--rule)}
+  .rule-h.top{top:100px}
+  .rule-h.bottom{top:980px}
+  .rule-v{position:absolute;left:1056px;top:100px;width:1px;height:881px;background:var(--rule)}
+  .eyebrow{
+    position:absolute;top:66px;
+    font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:12.5px;letter-spacing:1.7px;text-transform:uppercase;color:var(--ink-60);
   }
-  .card{
-    position:absolute;left:50%;top:25px;width:327px;height:424px;
-    margin-left:-163.5px;
-    background:var(--red);border-radius:18px;
-    box-shadow:0 18px 34px -18px rgba(20,64,15,.55), 0 2px 0 0 rgba(0,0,0,.14);
-    padding:22px;box-sizing:border-box;
-    display:flex;flex-direction:column;
-    overflow:hidden;
-    will-change:transform;
-  }
-  .photo{
-    width:100%;height:150px;border-radius:6px;overflow:hidden;
-    background:#9a2f13;flex:none;position:relative;
-  }
-  .photo img{
-    width:100%;height:100%;object-fit:cover;object-position:50% 58%;display:block;
-    will-change:transform;
-  }
-  .photo::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg,rgba(216,67,31,.20),rgba(216,67,31,.05) 45%,rgba(150,35,12,.32));
-    mix-blend-mode:multiply;
-  }
-  .titles{margin-top:26px;min-height:74px}
-  .overline{
-    font-family:"Instrument Serif",Georgia,"Times New Roman",serif;
-    font-size:22px;line-height:1.1;color:#F4B6A2;letter-spacing:.2px;
-  }
-  .headline{
-    font-size:25px;line-height:1.18;font-weight:600;color:#fff;letter-spacing:-.3px;
-    margin-top:3px;
-  }
-  .meta{display:flex;justify-content:space-between;gap:14px;margin-top:26px}
-  .meta .col{min-width:0}
-  .meta .col.right{text-align:right}
-  .lbl{
-    display:block;font-size:10px;font-weight:600;letter-spacing:1.3px;text-transform:uppercase;
-    color:rgba(255,255,255,.62);
-  }
-  .val{display:block;margin-top:6px;font-size:15.5px;font-weight:500;color:#fff;white-space:nowrap}
-  .rule{margin-top:auto;height:1px;background:rgba(255,255,255,.30)}
+  .eyebrow.left{left:96px}
+  .eyebrow.right{right:96px;text-align:right}
+  .eyebrow .mark{color:var(--accent)}
 
-  /* thin edge bar + mono caption below the card */
-  .edge{
-    position:absolute;left:50%;top:548px;width:386px;height:11px;margin-left:-193px;
-    background:linear-gradient(180deg,#2b2b2b,#101010 55%,#000);
-    border-radius:0 0 9px 9px;
-    box-shadow:0 1px 0 rgba(0,0,0,.35);
+  /* ---------- left column: photograph + spec readout ---------- */
+  .plate{
+    position:absolute;left:96px;top:152px;width:912px;height:520px;
+    overflow:hidden;background:var(--paper-2);
   }
-  .edge::before{
-    content:"";position:absolute;left:6px;right:6px;top:-2px;height:3px;
-    background:repeating-linear-gradient(90deg,rgba(246,233,107,.9) 0 2px,rgba(30,30,30,.9) 2px 4px);
-    border-radius:2px;opacity:.85;
+  .plate img{
+    width:100%;height:100%;object-fit:cover;object-position:50% 56%;display:block;
+    filter:saturate(.96) contrast(1.05);will-change:transform;
   }
-  .mono-cap{
-    position:absolute;left:0;right:0;top:568px;text-align:center;
-    font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-    font-size:12px;letter-spacing:.2px;color:var(--crimson);
+  .plate::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      linear-gradient(180deg,rgba(14,95,95,.10),rgba(14,95,95,0) 38%,rgba(22,33,31,.42)),
+      radial-gradient(120% 80% at 50% 40%,rgba(22,33,31,0) 45%,rgba(22,33,31,.22));
+  }
+  .plate-cap{
+    position:absolute;left:20px;bottom:16px;z-index:2;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.86);
+  }
+  .plate-cap i{font-style:normal;color:rgba(255,255,255,.55)}
+
+  .spec-no{
+    position:absolute;left:96px;top:704px;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:13px;letter-spacing:1.7px;text-transform:uppercase;color:var(--accent);
+    font-variant-numeric:tabular-nums;
+  }
+  .rule-spec{position:absolute;left:96px;top:732px;width:912px;height:1px;background:var(--rule)}
+  .value-window{position:absolute;left:96px;top:754px;width:440px;height:104px;overflow:hidden}
+  .value-roll{height:104px;will-change:transform}
+  .value{
+    font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
+    font-size:92px;font-weight:700;font-stretch:118%;letter-spacing:-2.5px;line-height:104px;
+    font-variant-numeric:tabular-nums;color:var(--ink);display:block;
+  }
+  .spec-title{
+    position:absolute;left:560px;top:758px;width:448px;
+    font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
+    font-size:30px;font-weight:600;font-stretch:110%;letter-spacing:-.3px;line-height:1.1;
+    color:var(--ink);text-wrap:balance;
+  }
+  .spec-unit{
+    position:absolute;left:560px;top:802px;width:448px;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);
+  }
+  .spec-desc{
+    position:absolute;left:560px;top:834px;width:448px;
+    font-size:16.5px;line-height:1.55;font-weight:400;color:var(--ink-60);
   }
 
-  /* ---------- right: feature wheel ---------- */
-  .wheel{position:absolute;left:0;top:0;width:1600px;height:900px;pointer-events:none}
-  .item{
-    position:absolute;left:0;top:0;white-space:nowrap;
-    transform-origin:0 50%;
-    font-size:47px;font-weight:600;letter-spacing:-.7px;line-height:1.05;
-    color:var(--mint);
-    will-change:transform,opacity;
+  /* ---------- right column: masthead + feature roller ---------- */
+  .masthead{
+    position:absolute;left:1104px;top:146px;
+    font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
+    font-size:88px;font-weight:700;font-stretch:122%;letter-spacing:-1.5px;line-height:.98;
+    color:var(--ink);
   }
-  .dot{
-    position:absolute;left:936px;top:452px;width:19px;height:19px;margin:-9.5px 0 0 -9.5px;
-    border-radius:50%;background:var(--mint);
+  .tagline{
+    position:absolute;left:1104px;top:254px;
+    font-size:19px;font-weight:450;color:var(--ink-60);letter-spacing:.1px;
   }
-  .ring{
-    position:absolute;left:936px;top:452px;width:19px;height:19px;margin:-9.5px 0 0 -9.5px;
-    border-radius:50%;border:2px solid var(--mint);
+  .rule-col{position:absolute;left:1104px;top:306px;width:720px;height:1px;background:var(--rule-strong)}
+  .col-head{
+    position:absolute;left:1104px;top:320px;width:720px;display:flex;justify-content:space-between;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink-35);
   }
+
+  .roller{
+    position:absolute;left:1104px;top:348px;width:720px;height:600px;overflow:hidden;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%);
+    mask-image:linear-gradient(180deg,transparent 0,#000 15%,#000 85%,transparent 100%);
+  }
+  .row{
+    position:absolute;left:0;top:0;width:720px;height:60px;
+    display:flex;align-items:center;gap:14px;
+    padding:0 16px 0 20px;box-sizing:border-box;
+    will-change:transform;
+  }
+  .row .name{flex:1;min-width:0;font-size:21px;font-weight:500;letter-spacing:-.1px;white-space:nowrap}
+  .row .val{
+    flex:none;font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:14px;letter-spacing:.2px;font-variant-numeric:tabular-nums;white-space:nowrap;
+  }
+  .cursor{
+    position:absolute;left:1088px;top:618px;width:752px;height:60px;
+    background:var(--paper-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  }
+  .cursor::before{content:"";position:absolute;left:0;top:-1px;bottom:-1px;width:3px;background:var(--accent)}
 
   /* ---------- footer ---------- */
-  .footer{
-    position:absolute;left:100px;top:852px;
-    font-family:"JetBrains Mono",ui-monospace,monospace;
-    font-size:12.5px;letter-spacing:.4px;color:rgba(111,227,155,.55);
+  .ticks{position:absolute;left:96px;top:1006px;display:flex;gap:6px}
+  .tick{width:62px;height:3px;background:var(--rule);position:relative;overflow:hidden}
+  .tick i{position:absolute;left:0;top:0;bottom:0;width:100%;background:var(--accent);transform-origin:0 50%;display:block}
+  .foot{
+    position:absolute;top:1002px;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--ink-35);
   }
-  .footer b{color:rgba(111,227,155,.9);font-weight:500}
+  .foot.mid{left:824px}
+  .foot.right{right:96px;text-align:right}
 </style>
 
 <div id="viewport">
   <div id="stage">
-    <div class="panel" id="panel">
-      <div class="card" id="card">
-        <div class="photo"><img id="carimg" src="__CAR_IMAGE__" alt="Chery TIGGO V di GIIAS 2026"></div>
-        <div class="titles">
-          <div class="overline">TIGGO V</div>
-          <div class="headline" id="headline">3-in-1 Versatility</div>
-        </div>
-        <div class="meta">
-          <div class="col">
-            <span class="lbl">Fitur</span>
-            <span class="val" id="metaIndex">01 / 10</span>
-          </div>
-          <div class="col right">
-            <span class="lbl">Spesifikasi</span>
-            <span class="val" id="metaSpec">SUV &middot; MPV &middot; Double Cab</span>
-          </div>
-        </div>
-        <div class="rule"></div>
-      </div>
-      <div class="edge" id="edge"></div>
-      <div class="mono-cap" id="monoCap">versatility: suv + mpv + double-cab</div>
+    <div class="eyebrow left">Chery Indonesia &nbsp;&middot;&nbsp; <span class="mark">Specially Built for Indonesia</span></div>
+    <div class="eyebrow right">GIIAS 2026 &nbsp;&middot;&nbsp; ICE BSD, Tangerang</div>
+    <div class="rule-h top"></div>
+    <div class="rule-v"></div>
+
+    <div class="plate">
+      <img id="carimg" src="__CAR_IMAGE__" alt="Chery TIGGO V pada GIIAS 2026">
+      <div class="plate-cap">TIGGO V &nbsp;<i>/</i>&nbsp; Debut pertama di luar China</div>
     </div>
 
-    <div class="wheel" id="wheel">
-      <div class="ring" id="ring"></div>
-      <div class="dot" id="dot"></div>
-    </div>
+    <div class="spec-no">Fitur <span id="specNo">01</span> / 10</div>
+    <div class="rule-spec"></div>
+    <div class="spec-title" id="specTitle">Versatilitas 3-in-1</div>
+    <div class="value-window"><div class="value-roll" id="valueRoll"><span class="value" id="specValue">3-in-1</span></div></div>
+    <div class="spec-unit" id="specUnit">SUV &middot; MPV &middot; Double Cab</div>
+    <div class="spec-desc" id="specDesc">Satu platform, tiga peran: ketangguhan SUV, kabin tiga baris MPV, dan bak terbuka double cab.</div>
 
-    <div class="footer"><b>CHERY TIGGO V</b> &nbsp;&middot;&nbsp; specially built for indonesia &nbsp;&middot;&nbsp; giias 2026</div>
+    <div class="masthead">TIGGO V</div>
+    <div class="tagline">Dikembangkan dari riset konsumen Indonesia sejak Februari 2024.</div>
+    <div class="rule-col"></div>
+    <div class="col-head"><span>Fitur unggulan</span><span>Spesifikasi</span></div>
+    <div class="cursor" id="cursor"></div>
+    <div class="roller" id="roller"></div>
+
+    <div class="ticks" id="ticks"></div>
+    <div class="foot mid">10 fitur unggulan</div>
+    <div class="foot right">Siaran pers &middot; 8 Agustus 2026</div>
+    <div class="rule-h bottom"></div>
   </div>
 </div>
 
@@ -157,135 +186,152 @@
   "use strict";
 
   const FEATURES = [
-    { label:"3-in-1 Versatility",      title:"3-in-1 Versatility",   spec:"SUV · MPV · Double Cab", mono:"versatility: suv + mpv + double-cab" },
-    { label:"Ground Clearance 220 mm", title:"Ground Clearance",     spec:"220 mm",                  mono:"ground-clearance: 220mm" },
-    { label:"Tanjakan 41°",       title:"Kemampuan Menanjak",   spec:"41°",                mono:"gradeability: 41deg" },
-    { label:"Wading 700 mm",           title:"Lintas Genangan",      spec:"700 mm",                  mono:"wading-depth: 700mm" },
-    { label:"Easy Turn",               title:"Easy Turn",            spec:"radius −0,5 m",      mono:"turning-radius: -0.5m" },
-    { label:"Air Flow Calibration",    title:"Air Flow Calibration", spec:"Baris 3 & Pilar C",       mono:"cabin-airflow: row3 + c-pillar" },
-    { label:"Kabin 2·4·5·7 Kursi", title:"Kabin Fleksibel", spec:"2 · 4 · 5 · 7 Kursi", mono:"seat-layout: 2 | 4 | 5 | 7 + bed" },
-    { label:"Super Hybrid 1.030 km",   title:"Chery Super Hybrid",   spec:"1.030 km",                mono:"range: 1030km / thermal-eff 42.5%" },
-    { label:"Split Tailgate 250 kg",   title:"Split Tailgate",       spec:"250 kg",                  mono:"tailgate-load: 250kg" },
-    { label:"Vehicle-to-Load 2,2 kW",  title:"Vehicle-to-Load",      spec:"2,2 kW",                  mono:"v2l-output: 2.2kW" }
+    { name:"Versatilitas 3-in-1", short:"3-in-1",     value:"3",       unit:"peran dalam satu platform",
+      desc:"Satu platform, tiga peran: ketangguhan SUV, kabin tiga baris MPV, dan bak terbuka double cab." },
+    { name:"Ground Clearance",    short:"220 mm",     value:"220",     unit:"mm jarak terendah",
+      desc:"Panjang 4.910 mm, lebar 1.921 mm, tinggi 1.790 mm \u2014 dengan jarak terendah 220 mm ke permukaan jalan." },
+    { name:"Kemampuan Menanjak",  short:"41\u00B0",        value:"41",      unit:"derajat sudut tanjakan",
+      desc:"Kapabilitas menanjak hingga 41 derajat, hasil riset langsung atas kondisi jalan di Indonesia." },
+    { name:"Lintas Genangan",     short:"700 mm",     value:"700",     unit:"mm kedalaman air",
+      desc:"Mampu melintasi genangan air hingga kedalaman 700 mm pada musim hujan." },
+    { name:"Easy Turn",           short:"\u22120,5 m",     value:"0,5",     unit:"meter radius putar lebih kecil",
+      desc:"Pengereman roda belakang memangkas radius putar sekitar 0,5 meter di ruang yang sempit." },
+    { name:"Sirkulasi Udara Kabin",short:"Baris 3 + C",value:"AFCS",   unit:"air flow calibration system",
+      desc:"Ventilasi AC pada baris ketiga dan pilar C mendistribusikan temperatur lebih merata di iklim tropis." },
+    { name:"Kabin Fleksibel",     short:"2\u00B74\u00B75\u00B77",    value:"2\u00B74\u00B75\u00B77", unit:"konfigurasi kursi + bed mode",
+      desc:"Konfigurasi 2, 4, 5, atau 7 penumpang \u2014 termasuk bed mode untuk beristirahat di perjalanan." },
+    { name:"Chery Super Hybrid",  short:"1.030 km",   value:"1.030",   unit:"km daya jelajah",
+      desc:"Powertrain ICE dan Chery Super Hybrid, dengan daya jelajah 1.030 km dan thermal efficiency 42,5%." },
+    { name:"Split Tailgate",      short:"250 kg",     value:"250",     unit:"kg beban tailgate",
+      desc:"Tailgate belah menopang beban hingga 250 kg dan dapat dipakai sebagai area duduk." },
+    { name:"Vehicle-to-Load",     short:"2,2 kW",     value:"2,2",     unit:"kW sumber listrik portabel",
+      desc:"V2L 2,2 kW memasok listrik untuk perangkat selama perjalanan maupun aktivitas luar ruang." }
   ];
 
-  const N     = FEATURES.length;  // 10 rows
-  const DUR   = 10;               // 10 second loop — one feature per second
-  const SLOT  = 88;               // vertical distance between rows (px)
-  const ROT   = 2.3;              // degrees of tilt per row
-  const CURVE = 4.6;              // horizontal arc strength (px per row squared)
-  const CX    = 1006;             // x of the centre row
-  const CY    = 452;              // y of the centre row
+  const N      = FEATURES.length; // 10 rows
+  const DUR    = 10;              // 10 second loop \u2014 one feature per second
+  const ROW    = 60;              // row height (px)
+  const CY     = 300;             // centre of the roller viewport
+  const SNAP   = 0.45;            // the roller travels one row in the first 45% of each beat
+  const LEAD   = 0.28;            // the spec readout starts its swap this early
 
-  const wheel = document.getElementById('wheel');
-  const nodes = [];
+  const roller = document.getElementById('roller');
+  const rows = [];
   for (let i = 0; i < N; i++) {
+    const f = FEATURES[(N - i) % N];   // row i carries the feature that lands i beats from now
     const el = document.createElement('div');
-    el.className = 'item';
-    // row i carries feature (N - i) % N so the selection runs 1 -> 10 while the list travels down
-    el.textContent = FEATURES[(N - i) % N].label;
-    wheel.appendChild(el);
-    nodes.push(el);
+    el.className = 'row';
+    el.innerHTML = '<span class="name"></span><span class="val"></span>';
+    el.querySelector('.name').textContent = f.name;
+    el.querySelector('.val').textContent = f.short;
+    roller.appendChild(el);
+    rows.push({ el, name: el.querySelector('.name'), val: el.querySelector('.val') });
   }
 
-  const headline  = document.getElementById('headline');
-  const metaIndex = document.getElementById('metaIndex');
-  const metaSpec  = document.getElementById('metaSpec');
-  const monoCap   = document.getElementById('monoCap');
-  const dot       = document.getElementById('dot');
-  const ring      = document.getElementById('ring');
-  const panel     = document.getElementById('panel');
-  const card      = document.getElementById('card');
-  const carimg    = document.getElementById('carimg');
-  const edge      = document.getElementById('edge');
+  const ticksWrap = document.getElementById('ticks');
+  const ticks = [];
+  for (let i = 0; i < N; i++) {
+    const t = document.createElement('span');
+    t.className = 'tick';
+    t.innerHTML = '<i></i>';
+    ticksWrap.appendChild(t);
+    ticks.push(t.firstChild);
+  }
+
+  const specNo = document.getElementById('specNo');
+  const specTitle = document.getElementById('specTitle');
+  const specValue = document.getElementById('specValue');
+  const specUnit = document.getElementById('specUnit');
+  const specDesc = document.getElementById('specDesc');
+  const valueRoll = document.getElementById('valueRoll');
+  const cursor = document.getElementById('cursor');
+  const carimg = document.getElementById('carimg');
 
   const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
   const wrapSlot = (s) => { s = ((s % N) + N) % N; return s > N / 2 ? s - N : s; };
-  const mix = (a, b, t) => a + (b - a) * t;
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const rgb = (A, B, t) => 'rgb(' + Math.round(lerp(A[0], B[0], t)) + ',' + Math.round(lerp(A[1], B[1], t)) + ',' + Math.round(lerp(A[2], B[2], t)) + ')';
 
-  // snappy picker easing: travels one row in the first 62% of the beat, then rests
-  function snap(f) {
-    const k = clamp(f / 0.62, 0, 1);
-    return k < 0.5 ? 8 * k * k * k * k : 1 - Math.pow(-2 * k + 2, 4) / 2;
-  }
+  const INK = [22, 33, 31], DIM = [143, 152, 149], ACCENT = [14, 95, 95];
 
-  const MINT    = [111, 227, 155];
-  const MINT_HI = [173, 241, 203];
+  // detent: quick departure, long settle \u2014 a mechanical picker, not a spring
+  const detent = (f) => { const k = clamp(f / SNAP, 0, 1); return 1 - Math.pow(1 - k, 5); };
+  const easeOut = (k) => 1 - Math.pow(1 - clamp(k, 0, 1), 3);
 
   function render(t) {
     t = ((t % DUR) + DUR) % DUR;
-    const beat = Math.floor(t);
-    const frac = t - beat;
-    const progress = beat + snap(frac);
-    const cycle = t / DUR * Math.PI * 2;   // seamless ambient sine over the loop
+    const beat = Math.floor(t), frac = t - beat;
+    const progress = beat + detent(frac);
+    const cycle = t / DUR * Math.PI * 2;     // ambient sine, one full turn per loop
 
-    // --- the wheel ---
+    // --- roller ---
     for (let i = 0; i < N; i++) {
       const s = wrapSlot(i + progress);
-      const a = Math.abs(s);
-      const x = CX - CURVE * s * s;
-      const y = CY + s * SLOT;
-      const fade = clamp((4.9 - a) / 1.3, 0, 1);
-      const sel = clamp(1 - a / 1.15, 0, 1);
-      const c = [0, 1, 2].map(j => Math.round(mix(MINT[j], MINT_HI[j], sel * sel)));
-      const n = nodes[i];
-      n.style.transform = 'translate(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px) translateY(-50%) rotate(' + (s * ROT).toFixed(3) + 'deg)';
-      n.style.opacity = (fade * (0.82 + 0.18 * sel)).toFixed(3);
-      n.style.color = 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
+      const sel = clamp(1 - Math.abs(s) / 1.05, 0, 1);
+      const r = rows[i];
+      r.el.style.transform = 'translateY(' + (CY + s * ROW - ROW / 2).toFixed(2) + 'px)';
+      r.name.style.color = rgb(DIM, INK, sel);
+      r.val.style.color = rgb(DIM, ACCENT, sel * .9);
     }
 
-    // --- card copy, swapped in sync with the row landing on the dot ---
-    const OUT = 0.20, IN = 0.52;
-    const tc = t + 0.62;                 // the wheel lands 0.62s into each beat
-    const beatC = Math.floor(tc), fracC = tc - beatC;
-    let idx, op, dy;
-    if (fracC < OUT) {
-      const u = fracC / OUT;
-      idx = (beatC - 1 + N) % N; op = 1 - u; dy = 8 * u;
-    } else {
-      const u = clamp((fracC - OUT) / (IN - OUT), 0, 1);
-      idx = beatC % N; op = u; dy = -10 * (1 - u);
-    }
+    // --- spec readout: swaps as the row settles under the cursor ---
+    const u = t + LEAD - SNAP;
+    const fb = Math.floor(u), fp = u - fb;
+    const idx = (((fb + 1) % N) + N) % N;
     const f = FEATURES[idx];
-    headline.textContent = f.title;
-    metaIndex.textContent = String(idx + 1).padStart(2, '0') + ' / 10';
-    metaSpec.textContent = f.spec;
-    monoCap.textContent = f.mono;
-    headline.style.opacity = op.toFixed(3);
-    headline.style.transform = 'translateY(' + dy.toFixed(2) + 'px)';
-    for (const el of [metaIndex, metaSpec]) {
-      el.style.opacity = op.toFixed(3);
-      el.style.transform = 'translateY(' + (dy * 0.6).toFixed(2) + 'px)';
+    const OUT = 0.13, IN = 0.34;
+
+    let roll, fade, rise;
+    if (fp < OUT) {                       // outgoing value rolls up out of its window
+      const k = easeOut(fp / OUT);
+      const prev = FEATURES[(idx - 1 + N) % N];
+      specValue.textContent = prev.value;
+      specNo.textContent = String(((idx - 1 + N) % N) + 1).padStart(2, '0');
+      specTitle.textContent = prev.name;
+      specUnit.textContent = prev.unit;
+      specDesc.textContent = prev.desc;
+      roll = -104 * k; fade = 1 - k; rise = -5 * k;
+    } else {                              // incoming value rolls up into place
+      const k = easeOut((fp - OUT) / (IN - OUT));
+      specValue.textContent = f.value;
+      specNo.textContent = String(idx + 1).padStart(2, '0');
+      specTitle.textContent = f.name;
+      specUnit.textContent = f.unit;
+      specDesc.textContent = f.desc;
+      roll = 104 * (1 - k); fade = k; rise = 6 * (1 - k);
     }
-    monoCap.style.opacity = op.toFixed(3);
+    valueRoll.style.transform = 'translateY(' + roll.toFixed(2) + 'px)';
+    specTitle.style.opacity = fade.toFixed(3);
+    specTitle.style.transform = 'translateY(' + rise.toFixed(2) + 'px)';
+    specNo.style.opacity = fade.toFixed(3);
+    specUnit.style.opacity = fade.toFixed(3);
+    specUnit.style.transform = 'translateY(' + (rise * .6).toFixed(2) + 'px)';
+    specDesc.style.opacity = (fade * .96).toFixed(3);
+    specDesc.style.transform = 'translateY(' + (rise * .4).toFixed(2) + 'px)';
 
-    // --- selection dot tick ---
-    const pulse = Math.pow(clamp(1 - frac / 0.5, 0, 1), 2);
-    dot.style.transform = 'scale(' + (1 + 0.42 * pulse).toFixed(3) + ')';
-    ring.style.transform = 'scale(' + (1 + 2.4 * (1 - pulse)).toFixed(3) + ')';
-    ring.style.opacity = (0.5 * pulse).toFixed(3);
+    // --- progress ticks: the active segment fills across its own second ---
+    for (let i = 0; i < N; i++) {
+      const done = i < idx ? 1 : i === idx ? fp : 0;
+      ticks[i].style.transform = 'scaleX(' + done.toFixed(3) + ')';
+      ticks[i].style.opacity = i < idx ? '.32' : '1';
+    }
 
-    // --- ambient breathing, sine-driven so the loop stays seamless ---
-    panel.style.transform = 'translateY(' + (Math.sin(cycle) * 4).toFixed(2) + 'px)';
-    card.style.transform = 'translateY(' + (Math.sin(cycle + 0.6) * 5).toFixed(2) + 'px) scale(' + (1 + 0.006 * Math.sin(cycle)).toFixed(4) + ')';
-    carimg.style.transform = 'scale(' + (1.05 + 0.035 * (0.5 - 0.5 * Math.cos(cycle))).toFixed(4) + ')';
-    edge.style.transform = 'scaleX(' + (1 - 0.02 * (0.5 - 0.5 * Math.cos(cycle))).toFixed(4) + ')';
+    // --- cursor settles with the row; photograph drifts across the loop ---
+    const settle = Math.pow(clamp(1 - frac / SNAP, 0, 1), 2);
+    cursor.style.transform = 'translateX(' + (-2 * settle).toFixed(2) + 'px)';
+    carimg.style.transform = 'scale(' + (1.045 + 0.03 * (0.5 - 0.5 * Math.cos(cycle))).toFixed(4) +
+      ') translateX(' + (Math.sin(cycle) * 7).toFixed(2) + 'px)';
   }
 
   function fit() {
-    const s = Math.min(innerWidth / 1600, innerHeight / 900);
-    document.getElementById('stage').style.setProperty('--s', s);
+    document.getElementById('stage').style.setProperty('--s', Math.min(innerWidth / 1920, innerHeight / 1080));
   }
   addEventListener('resize', fit);
   fit();
 
   let raf = 0;
   const t0 = performance.now();
-  function frame(now) {
-    render((now - t0) / 1000);
-    raf = requestAnimationFrame(frame);
-  }
-  raf = requestAnimationFrame(frame);
+  (function frame(now) { render((now - t0) / 1000); raf = requestAnimationFrame(frame); })(t0);
 
   // deterministic frame rendering, used by the video exporter
   window.__setTime = (t) => { if (raf) { cancelAnimationFrame(raf); raf = 0; } render(t); };
