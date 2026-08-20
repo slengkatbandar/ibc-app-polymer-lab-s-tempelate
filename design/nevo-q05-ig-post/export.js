@@ -8,7 +8,7 @@ const { execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const FPS = 30, DUR = 10, W = 1080, H = 1350;
+const FPS = 30, DUR = 10, W = 1080, H = 1920;
 const OUT = path.resolve(__dirname);
 const WORK = process.env.WORK_DIR || '/tmp/tiggo-frames';
 // playwright's bundled ffmpeg only speaks VP8/webm, so prefer a full build when present
@@ -61,13 +61,13 @@ const FFMPEG = process.env.FFMPEG || (() => {
     '-shortest', '-c:a', 'aac', '-b:a', '96k',
     '-c:v', 'libx264', '-preset', 'slow', '-crf', '20',
     '-pix_fmt', 'yuv420p', '-movflags', '+faststart',
-    '-r', String(FPS), path.join(OUT, 'nevo-q05-post.mp4'),
+    '-r', String(FPS), path.join(OUT, 'nevo-q05-reels.mp4'),
   ], { stdio: 'inherit' });
 
   execFileSync(FFMPEG, [
     '-y', '-framerate', String(FPS), '-i', path.join(WORK, 'f%04d.jpg'),
     '-vf', 'fps=15,scale=540:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96[p];[b][p]paletteuse=dither=bayer:bayer_scale=3',
-    '-loop', '0', path.join(OUT, 'nevo-q05-post.gif'),
+    '-loop', '0', path.join(OUT, 'nevo-q05-reels.gif'),
   ], { stdio: 'inherit' });
 
   console.log('done');

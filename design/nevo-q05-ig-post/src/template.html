@@ -1,17 +1,19 @@
 <meta charset="utf-8">
-<title>Nevo Q05 Spec Post</title>
+<title>Nevo Q05 Spec Reel</title>
 <style>
 __FONTS__
-  /* Instagram 4:5 post. One committed visual world: mint ground, lavender
-     structure, lime as the single signal colour, everything else ink. */
+  /* Instagram Reels, 1080x1920. One committed visual world: mint ground,
+     lavender structure, lime as the single signal colour, ink type.
+     Type is sized to stay readable on a phone held at ~30 cm. */
   :root{
     --mint:#A5DBD5;
     --lavender:#CBC9F4;
     --lime:#C9FF3D;
-    --ink:#12121B;
+    --ink:#23232E;
     --paper:#F4F2EC;
-    --ink-45:rgba(18,18,27,.45);
-    --ink-20:rgba(18,18,27,.20);
+    --ink-70:rgba(35,35,46,.70);
+    --ink-55:rgba(35,35,46,.55);
+    --ink-25:rgba(35,35,46,.25);
     --surround:#0E1514;
   }
   html,body{height:100%}
@@ -22,125 +24,129 @@ __FONTS__
   }
   #viewport{position:fixed;inset:0;display:grid;place-items:center;background:var(--surround);overflow:hidden}
   #stage{
-    position:relative;width:1080px;height:1350px;overflow:hidden;
+    position:relative;width:1080px;height:1920px;overflow:hidden;
     background:var(--mint);
     transform:scale(var(--s,1));transform-origin:center center;
   }
   .grid{
     position:absolute;inset:0;
     background-image:
-      linear-gradient(to right,rgba(18,18,27,.055) 1px,transparent 1px),
-      linear-gradient(to bottom,rgba(18,18,27,.055) 1px,transparent 1px);
-    background-size:36px 36px;
+      linear-gradient(to right,rgba(35,35,46,.05) 1px,transparent 1px),
+      linear-gradient(to bottom,rgba(35,35,46,.05) 1px,transparent 1px);
+    background-size:48px 48px;
   }
 
   /* ---------- masthead ---------- */
   .tag{
-    position:absolute;left:56px;top:44px;height:34px;display:flex;align-items:center;
-    background:var(--ink);color:var(--mint);padding:0 12px;
+    position:absolute;left:60px;top:104px;height:60px;display:flex;align-items:center;
+    background:var(--ink);color:var(--mint);padding:0 18px;
     font-family:"IBM Plex Mono",ui-monospace,monospace;
-    font-size:14px;font-weight:500;letter-spacing:2.4px;
+    font-size:26px;font-weight:500;letter-spacing:3px;
   }
   .tag-sub{
-    position:absolute;left:206px;top:44px;height:34px;display:flex;align-items:center;
+    position:absolute;left:300px;top:104px;height:60px;display:flex;align-items:center;
     font-family:"IBM Plex Mono",ui-monospace,monospace;
-    font-size:14px;letter-spacing:2.4px;color:var(--ink);
+    font-size:26px;letter-spacing:3px;color:var(--ink);
   }
-  .slug{
-    position:absolute;right:56px;top:44px;text-align:right;
+  .pill{
+    position:absolute;right:60px;top:104px;height:60px;display:flex;align-items:center;gap:12px;
+    background:var(--paper);border:3px solid var(--ink);padding:0 20px;box-sizing:border-box;
     font-family:"IBM Plex Mono",ui-monospace,monospace;
-    font-size:12.5px;line-height:1.45;letter-spacing:1.8px;color:var(--ink-45);
+    font-size:22px;font-weight:500;letter-spacing:2.4px;
   }
-  .ticks{position:absolute;left:56px;top:100px;display:flex;gap:6px}
-  .tick{width:91px;height:4px;background:var(--ink-20);overflow:hidden}
+  .pill .dot{width:16px;height:16px;border-radius:50%;background:var(--lime);border:2px solid var(--ink)}
+
+  .ticks{position:absolute;left:60px;top:196px;width:960px;display:flex;gap:7px}
+  .tick{flex:1;height:10px;background:var(--ink-25);overflow:hidden}
   .tick i{display:block;height:100%;width:100%;background:var(--ink);transform-origin:0 50%}
 
-  /* ---------- hook: the spec number that changes every second ---------- */
-  .value-window{position:absolute;left:52px;top:132px;width:330px;height:132px;overflow:hidden}
-  .value-roll{height:132px;will-change:transform}
+  /* ---------- hook: the number that changes every second ---------- */
+  .value-window{position:absolute;left:56px;top:236px;width:968px;height:196px;overflow:hidden}
+  .value-roll{height:196px;will-change:transform}
   .value{
     display:block;font-family:"Archivo Black",Archivo,"Helvetica Neue",Arial,sans-serif;
-    font-size:118px;line-height:132px;letter-spacing:-5px;color:var(--ink);
+    font-size:172px;line-height:196px;letter-spacing:-7px;color:var(--ink);
     font-variant-numeric:tabular-nums;
   }
   .unit{
-    position:absolute;left:396px;top:150px;height:32px;display:inline-flex;align-items:center;
-    background:var(--lime);border:2px solid var(--ink);padding:0 12px;
+    position:absolute;left:60px;top:450px;height:60px;display:inline-flex;align-items:center;
+    background:var(--lime);border:3px solid var(--ink);padding:0 18px;
     font-family:"IBM Plex Mono",ui-monospace,monospace;
-    font-size:14px;font-weight:500;letter-spacing:2px;color:var(--ink);
+    font-size:28px;font-weight:500;letter-spacing:3px;color:var(--ink);
   }
   .headline{
-    position:absolute;left:396px;top:196px;width:628px;
-    font-size:38px;font-weight:700;font-stretch:105%;letter-spacing:-.8px;line-height:1.05;
+    position:absolute;left:60px;top:534px;width:960px;
+    font-size:62px;font-weight:700;font-stretch:105%;letter-spacing:-1.4px;line-height:1.02;
   }
   .note{
-    position:absolute;left:396px;top:246px;width:600px;
-    font-size:17px;font-weight:400;line-height:1.4;color:var(--ink-45);
+    position:absolute;left:60px;top:620px;width:960px;
+    font-size:38px;font-weight:400;line-height:1.3;color:var(--ink-70);
   }
 
   /* ---------- hero: the car, contained so nothing gets clipped ---------- */
-  .hero{position:absolute;left:0;top:300px;width:1080px;height:520px}
+  .hero{position:absolute;left:0;top:700px;width:1080px;height:360px}
   .band{
-    position:absolute;left:-140px;top:212px;width:1360px;height:150px;
-    background:var(--lavender);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+    position:absolute;left:-160px;top:96px;width:1420px;height:172px;
+    background:var(--lavender);border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);
     transform:rotate(-7deg);will-change:transform;
   }
   .band::after{
     content:"";position:absolute;inset:0;
-    background:repeating-linear-gradient(180deg,transparent 0 36px,rgba(18,18,27,.30) 36px 37px);
+    background:repeating-linear-gradient(180deg,transparent 0 46px,rgba(35,35,46,.28) 46px 47px);
   }
   .car{
-    position:absolute;left:24px;top:6px;width:1032px;height:508px;
+    position:absolute;left:20px;top:0;width:1040px;height:360px;
     display:flex;align-items:center;justify-content:center;
   }
   .car img{max-width:100%;max-height:100%;object-fit:contain;display:block;will-change:transform}
+  /* the cutout lost its ground shadow, so the pair gets a soft contact shadow back */
+  .ground{
+    position:absolute;left:20px;top:296px;width:1040px;height:48px;
+    background:
+      radial-gradient(ellipse 19% 42% at 26% 50%,rgba(35,35,46,.26),transparent 74%),
+      radial-gradient(ellipse 19% 42% at 73% 52%,rgba(35,35,46,.26),transparent 74%);
+  }
 
   /* ---------- spec roller ---------- */
   .card{
-    position:absolute;left:56px;top:836px;width:968px;height:420px;
-    background:var(--paper);border:2.5px solid var(--ink);box-sizing:border-box;
+    position:absolute;left:60px;top:1100px;width:960px;height:480px;
+    background:var(--paper);border:4px solid var(--ink);box-sizing:border-box;
   }
   .card-head{
-    position:absolute;left:0;top:0;width:100%;height:36px;box-sizing:border-box;
-    background:var(--lavender);border-bottom:2.5px solid var(--ink);
-    display:flex;align-items:center;justify-content:space-between;padding:0 16px;
+    position:absolute;left:0;top:0;width:100%;height:62px;box-sizing:border-box;
+    background:var(--lavender);border-bottom:4px solid var(--ink);
+    display:flex;align-items:center;justify-content:space-between;padding:0 24px;
     font-family:"IBM Plex Mono",ui-monospace,monospace;
-    font-size:13px;font-weight:500;letter-spacing:2.2px;color:var(--ink);
+    font-size:24px;font-weight:500;letter-spacing:3px;color:var(--ink);
   }
   .roller{
-    position:absolute;left:0;top:36px;width:100%;height:379px;overflow:hidden;
-    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 16%,#000 84%,transparent 100%);
-    mask-image:linear-gradient(180deg,transparent 0,#000 16%,#000 84%,transparent 100%);
+    position:absolute;left:0;top:62px;width:100%;height:418px;overflow:hidden;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 13%,#000 87%,transparent 100%);
+    mask-image:linear-gradient(180deg,transparent 0,#000 13%,#000 87%,transparent 100%);
   }
   .row{
-    position:absolute;left:0;top:0;width:100%;height:58px;box-sizing:border-box;
-    display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 20px;
+    position:absolute;left:0;top:0;width:100%;height:94px;box-sizing:border-box;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 26px;
     will-change:transform;
   }
-  .row .name{font-size:25px;font-weight:600;letter-spacing:-.3px;white-space:nowrap}
+  .row .name{font-size:48px;font-weight:600;letter-spacing:-.9px;white-space:nowrap}
   .row .val{
     font-family:"IBM Plex Mono",ui-monospace,monospace;
-    font-size:15px;font-weight:500;letter-spacing:.6px;white-space:nowrap;
+    font-size:30px;font-weight:500;letter-spacing:.4px;white-space:nowrap;
     font-variant-numeric:tabular-nums;
   }
   .cursor{
-    position:absolute;left:0;top:197px;width:100%;height:58px;box-sizing:border-box;
-    background:var(--lime);border-top:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink);
+    position:absolute;left:0;top:224px;width:100%;height:94px;box-sizing:border-box;
+    background:var(--lime);border-top:4px solid var(--ink);border-bottom:4px solid var(--ink);
   }
-  .cursor::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--ink)}
+  .cursor::before{content:"";position:absolute;left:0;top:0;bottom:0;width:12px;background:var(--ink)}
 
-  /* ---------- footer ---------- */
-  .pill{
-    position:absolute;left:56px;top:1276px;height:38px;display:flex;align-items:center;gap:10px;
-    background:var(--paper);border:2.5px solid var(--ink);padding:0 16px;
-    font-family:"IBM Plex Mono",ui-monospace,monospace;
-    font-size:13px;font-weight:500;letter-spacing:2px;
-  }
-  .pill .dot{width:11px;height:11px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink)}
-  .credit{
-    position:absolute;right:56px;top:1286px;text-align:right;
-    font-family:"IBM Plex Mono",ui-monospace,monospace;
-    font-size:11.5px;letter-spacing:1.4px;color:var(--ink-45);
+  /* ---------- tail: brand mark, safe to sit under Instagram's UI ---------- */
+  .wordmark{
+    position:absolute;left:0;right:0;top:1650px;text-align:center;
+    font-family:"Archivo Black",Archivo,Arial,sans-serif;
+    font-size:180px;line-height:1;letter-spacing:-8px;color:transparent;
+    -webkit-text-stroke:4px var(--ink-25);
   }
 </style>
 
@@ -150,27 +156,27 @@ __FONTS__
 
     <div class="tag">CHANGAN</div>
     <div class="tag-sub">/ NEVO Q05</div>
-    <div class="slug">IG POST CONCEPT<br>NQ05&mdash;01 / V1</div>
+    <div class="pill"><span class="dot"></span>100% ELECTRIC</div>
     <div class="ticks" id="ticks"></div>
 
     <div class="value-window"><div class="value-roll" id="valueRoll"><span class="value" id="specValue">462</span></div></div>
     <div class="unit" id="specUnit">KM &middot; NEDC</div>
     <div class="headline" id="specTitle">Jarak Tempuh</div>
-    <div class="note" id="specNote">Sekali pengisian penuh, cukup untuk rutinitas kota berhari-hari.</div>
+    <div class="note" id="specNote">Cukup untuk rutinitas kota berhari-hari.</div>
 
     <div class="hero">
       <div class="band" id="band"></div>
-      <div class="car"><img id="carimg" src="__CAR_IMAGE__" alt="Changan Nevo Q05"></div>
+      <div class="ground"></div>
+      <div class="car"><img id="carimg" src="__CAR_IMAGE__" alt="Dua unit Changan Nevo Q05"></div>
     </div>
 
     <div class="card">
-      <div class="card-head"><span>SPESIFIKASI</span><span>SUV LISTRIK &middot; BEV</span></div>
+      <div class="card-head"><span>SPESIFIKASI</span><span>SMART DRIVE, EASY LIFE.</span></div>
       <div class="cursor"></div>
       <div class="roller" id="roller"></div>
     </div>
 
-    <div class="pill"><span class="dot"></span>100% ELECTRIC</div>
-    <div class="credit">Konsep konten &middot; data spesifikasi publik, Agustus 2026</div>
+    <div class="wordmark">NEVO Q05</div>
   </div>
 </div>
 
@@ -178,33 +184,35 @@ __FONTS__
 (() => {
   "use strict";
 
+  // Every figure below comes from the official Nevo Q05 flyer
+  // (PT Dinamika Indomobil Transportasi, 26/07/26).
   const FEATURES = [
-    { name:"Jarak Tempuh",     row:"462 km",   value:"462",  unit:"KM \u00B7 NEDC",
-      note:"Sekali pengisian penuh, cukup untuk rutinitas kota berhari-hari." },
-    { name:"Fast Charging",    row:"15 menit", value:"15",   unit:"MENIT 30\u201380%",
-      note:"DC fast charging dari 30% ke 80% hanya dalam 15 menit." },
-    { name:"Baterai CATL LFP", row:"51,9 kWh", value:"51,9", unit:"KWH \u00B7 LFP",
-      note:"Lithium iron phosphate CATL \u2014 stabil dan tahan siklus pengisian." },
-    { name:"Tenaga Motor",     row:"120 kW",   value:"120",  unit:"KW \u00B7 190 NM",
-      note:"Torsi instan 190 Nm sejak putaran pertama, tanpa jeda transmisi." },
-    { name:"Kapasitas Bagasi", row:"540 L",    value:"540",  unit:"LITER BAGASI",
-      note:"540 liter, mengembang sampai 1.380 liter saat kursi belakang dilipat." },
-    { name:"Head Unit",        row:"14,6 inci",value:"14,6", unit:"INCI LAYAR",
-      note:"Layar 1080P HD, berpasangan dengan cluster digital 10,17 inci." },
-    { name:"Surround View",    row:"540\u00B0",value:"540",  unit:"DERAJAT KAMERA",
-      note:"Kamera 540 derajat plus transparent chassis untuk manuver sempit." },
-    { name:"Airbag & ADAS",    row:"6 + L2",   value:"6",    unit:"AIRBAG \u00B7 ADAS L2",
-      note:"Enam airbag dan ADAS Level 2 sebagai standar keselamatan aktif." },
-    { name:"Panoramic Roof",   row:"1,8 m\u00B2", value:"1,8", unit:"M\u00B2 PANORAMIC",
-      note:"Atap panoramik dengan electric sunshade pada varian Max." },
-    { name:"Garansi Baterai",  row:"8 tahun",  value:"8",    unit:"TAHUN / 240.000 KM",
-      note:"Garansi baterai 8 tahun; kendaraan 5 tahun atau 150.000 km." }
+    { name:"Jarak Tempuh",    row:"462 km",    value:"462",   unit:"KM \u00B7 NEDC",
+      note:"Sekali isi penuh untuk rutinitas berhari-hari." },
+    { name:"Fast Charging",   row:"15 menit",  value:"15",    unit:"MENIT 30\u201380%",
+      note:"3C fast charging: 30% ke 80% dalam 15 menit." },
+    { name:"Baterai LFP",     row:"51,9 kWh",  value:"51,9",  unit:"KWH \u00B7 LFP",
+      note:"Lithium Iron Phosphate, aman dan tahan lama." },
+    { name:"Tenaga Motor",    row:"120 kW",    value:"120",   unit:"KW \u00B7 190 NM",
+      note:"Motor sinkron magnet permanen, penggerak depan." },
+    { name:"Wheelbase",       row:"2.735 mm",  value:"2.735", unit:"MM WHEELBASE",
+      note:"Terpanjang di kelasnya, kabin terasa lega." },
+    { name:"Head Unit",       row:"14,6 inci", value:"14,6",  unit:"INCI TOUCHSCREEN",
+      note:"Plus cluster digital 10,17 inci." },
+    { name:"Fitur ADAS",      row:"12 fungsi", value:"12",    unit:"FUNGSI ADAS \u00B7 L2",
+      note:"3 radar mm-wave, 5 kamera, 3 sensor ultrasonik." },
+    { name:"Koefisien Drag",  row:"0,265 Cd",  value:"0,265", unit:"CD KOEFISIEN DRAG",
+      note:"Serendah 0,265 Cd, terbaik di segmennya." },
+    { name:"Ruang Simpan",    row:"27 titik",  value:"27",    unit:"RUANG SIMPAN",
+      note:"27 tempat simpan supaya kabin tetap rapi." },
+    { name:"Garansi Baterai", row:"8 tahun",   value:"8",     unit:"TAHUN / 240.000 KM",
+      note:"Kendaraan 5 tahun atau 150.000 km." }
   ];
 
   const N     = FEATURES.length; // 10 rows
-  const DUR   = 10;              // 10 second loop \u2014 one feature per second
-  const ROW   = 58;              // row height (px)
-  const CY    = 190;             // centre of the roller viewport (matches .cursor)
+  const DUR   = 10;              // 10 second loop - one feature per second
+  const ROW   = 94;              // row height (px)
+  const CY    = 209;             // centre of the roller viewport (matches .cursor)
   const SNAP  = 0.45;            // the roller travels one row in the first 45% of a beat
   const LEAD  = 0.28;            // the hook starts its swap this early
 
@@ -257,11 +265,11 @@ __FONTS__
       const sel = clamp(1 - Math.abs(s) / 1.05, 0, 1);
       const r = rows[i];
       r.el.style.transform = 'translateY(' + (CY + s * ROW - ROW / 2).toFixed(2) + 'px)';
-      r.name.style.opacity = (0.42 + 0.58 * sel).toFixed(3);
-      r.val.style.opacity = (0.38 + 0.62 * sel).toFixed(3);
+      r.name.style.opacity = (0.58 + 0.42 * sel).toFixed(3);
+      r.val.style.opacity = (0.52 + 0.48 * sel).toFixed(3);
     }
 
-    // --- hook: value rolls like an odometer as the row lands on the cursor ---
+    // --- hook: the value rolls like an odometer as the row lands on the cursor ---
     const u = t + LEAD - SNAP;
     const fb = Math.floor(u), fp = u - fb;
     const idx = (((fb + 1) % N) + N) % N;
@@ -271,11 +279,11 @@ __FONTS__
     if (fp < OUT) {
       const k = easeOut(fp / OUT);
       show = FEATURES[(idx - 1 + N) % N];
-      roll = -132 * k; fade = 1 - k; rise = -5 * k;
+      roll = -196 * k; fade = 1 - k; rise = -7 * k;
     } else {
       const k = easeOut((fp - OUT) / (IN - OUT));
       show = FEATURES[idx];
-      roll = 132 * (1 - k); fade = k; rise = 6 * (1 - k);
+      roll = 196 * (1 - k); fade = k; rise = 9 * (1 - k);
     }
     specValue.textContent = show.value;
     specUnit.textContent = show.unit;
@@ -291,17 +299,17 @@ __FONTS__
     // --- progress ticks: the active segment fills across its own second ---
     for (let i = 0; i < N; i++) {
       ticks[i].style.transform = 'scaleX(' + (i < idx ? 1 : i === idx ? fp : 0).toFixed(3) + ')';
-      ticks[i].style.opacity = i < idx ? '.35' : '1';
+      ticks[i].style.opacity = i < idx ? '.4' : '1';
     }
 
     // --- ambient drift, sine-driven so the loop stays seamless ---
-    band.style.transform = 'rotate(-7deg) translateX(' + (Math.sin(cycle) * 14).toFixed(2) + 'px)';
-    carimg.style.transform = 'translateY(' + (Math.sin(cycle) * -7).toFixed(2) +
-      'px) scale(' + (1 + 0.012 * (0.5 - 0.5 * Math.cos(cycle))).toFixed(4) + ')';
+    band.style.transform = 'rotate(-7deg) translateX(' + (Math.sin(cycle) * 16).toFixed(2) + 'px)';
+    carimg.style.transform = 'translateY(' + (Math.sin(cycle) * -8).toFixed(2) +
+      'px) scale(' + (1 + 0.014 * (0.5 - 0.5 * Math.cos(cycle))).toFixed(4) + ')';
   }
 
   function fit() {
-    document.getElementById('stage').style.setProperty('--s', Math.min(innerWidth / 1080, innerHeight / 1350));
+    document.getElementById('stage').style.setProperty('--s', Math.min(innerWidth / 1080, innerHeight / 1920));
   }
   addEventListener('resize', fit);
   fit();
