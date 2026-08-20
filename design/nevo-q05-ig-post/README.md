@@ -34,18 +34,18 @@ tidak dicantumkan.
 
 ## Foto
 
-`src/cutout.py` memotong latar foto dua unit Nevo Q05 memakai
+`src/cutout.py` memotong latar foto studio dua unit Nevo Q05 memakai
 [rembg](https://github.com/danielgatis/rembg) model `isnet-general-use`. Dua hal
-yang membuat hasilnya bersih:
+yang menjaga hasilnya tetap bersih, termasuk saat sumbernya foto lokasi:
 
 1. tiap mobil disegmentasi dari separuh framenya sendiri — sekali jalan pada
-   frame 4096 px, model memotong bagian bawah ban;
-2. hanya dua komponen terbesar yang dipertahankan, sehingga garis parkir kuning
-   di antara kedua mobil ikut terbuang.
+   frame beresolusi besar, model sempat memotong bagian bawah ban;
+2. hanya dua komponen terbesar yang dipertahankan, sehingga sisa latar yang
+   ikut tersegmentasi (misalnya garis parkir) terbuang.
 
-Hasilnya di-*trim* ke batas alpha, diperkecil ke 2200 px, dan disimpan sebagai
-WebP (201 KB, dibanding 1,5 MB untuk PNG). Bayangan kontak yang hilang bersama
-latar dikembalikan lewat dua elips lembut di CSS.
+Hasilnya di-*trim* ke batas alpha dan disimpan sebagai WebP beralpha — 61 KB,
+jauh di bawah PNG-nya. Bayangan kontak yang hilang bersama latar dikembalikan
+lewat dua elips lembut di CSS.
 
 ## Arah desain
 
