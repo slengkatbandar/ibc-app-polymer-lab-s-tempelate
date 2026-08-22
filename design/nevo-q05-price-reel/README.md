@@ -25,13 +25,14 @@ Aksen warna dipakai sebagai penanda varian, bukan hiasan:
 Di bagian bawah, daftar pembeda varian ikut berganti dan muncul satu per satu
 (berjeda 0,09 detik) tepat setelah harganya mendarat:
 
-Delapan baris di flyer yang isinya berbeda antara PRO dan MAX &mdash; semuanya
-masuk, tanpa kecuali:
+Delapan baris di flyer berbeda antara PRO dan MAX. Tiap varian menampilkan apa
+yang benar-benar dimilikinya pada baris-baris itu &mdash; lima untuk PRO, delapan
+untuk MAX:
 
-| # | PRO | MAX |
+| # | PRO (Rp309 jt) | MAX (Rp359 jt) |
 |---|---|---|
 | 1 | Roda alloy 17 inci (225/60R17) | Roda alloy 18 inci (225/55R18) |
-| 2 | Kursi pengemudi elektrik 6 arah | + ventilasi & seat easy access |
+| 2 | Kursi elektrik 6 arah | + ventilasi & seat easy access |
 | 3 | Kursi penumpang manual 4 arah | Elektrik 4 arah + ventilasi |
 | 4 | Airbag depan & samping | + tirai samping |
 | 5 | Speaker 4 titik | Speaker 8 titik |
@@ -39,14 +40,11 @@ masuk, tanpa kecuali:
 | 7 | &mdash; | Power tailgate anti-pinch |
 | 8 | &mdash; | Panoramic glass roof |
 
-Item-itemnya menempati slot yang sama di kedua varian, jadi tiga baris yang
-tidak dimiliki PRO (6&ndash;8) tampil redup dengan penanda garis, lalu **menyala**
-begitu MAX muncul. Itu persis cerita "apa yang didapat dengan tambahan Rp50
-juta", tanpa perlu satu kata penjelas pun.
-
-Daftarnya disusun empat baris kali dua kolom dengan lebar kolom tetap
-(500 px / 460 px). Sempat dicoba pakai `space-between`, tapi karena panjang tiap
-baris berbeda jauh hasilnya menyisakan celah tak beraturan di tengah.
+Daftarnya satu grid dua kolom berlebar tetap (500 px / 460 px), bukan baris
+bersarang: daftar PRO tiga item lebih pendek, jadi harus bisa mengalir ulang
+tanpa meninggalkan baris kosong. `space-between` juga sempat dicoba dan ditolak
+&mdash; panjang tiap baris berbeda jauh sehingga menyisakan celah tak beraturan
+di tengah.
 
 ## Elemen pop lain
 
