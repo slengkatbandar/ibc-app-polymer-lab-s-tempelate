@@ -1,0 +1,334 @@
+<meta charset="utf-8">
+<title>Nevo Q05 Price Reel</title>
+<style>
+__FONTS__
+  /* Instagram Reels, 1080x1920. Same world as the spec reel - mint ground,
+     ink type, flat blocks - but here the accent carries meaning: lime is PRO,
+     lavender is MAX, and the whole frame flips with the trim. */
+  :root{
+    --mint:#A5DBD5;
+    --lime:#C9FF3D;
+    --lavender:#CBC9F4;
+    --ink:#23232E;
+    --paper:#F4F2EC;
+    --ink-70:rgba(35,35,46,.70);
+    --ink-25:rgba(35,35,46,.25);
+    --accent:#C9FF3D;
+    --surround:#0E1514;
+  }
+  html,body{height:100%}
+  body{
+    margin:0;background:var(--surround);color:var(--ink);
+    font-family:Archivo,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;overflow:hidden;
+  }
+  #viewport{position:fixed;inset:0;display:grid;place-items:center;background:var(--surround);overflow:hidden}
+  #stage{
+    position:relative;width:1080px;height:1920px;overflow:hidden;
+    background:var(--mint);
+    transform:scale(var(--s,1));transform-origin:center center;
+  }
+  .grid{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(to right,rgba(35,35,46,.05) 1px,transparent 1px),
+      linear-gradient(to bottom,rgba(35,35,46,.05) 1px,transparent 1px);
+    background-size:48px 48px;
+  }
+
+  /* ---------- masthead ---------- */
+  .tag{
+    position:absolute;left:60px;top:104px;height:60px;display:flex;align-items:center;
+    background:var(--ink);color:var(--mint);padding:0 18px;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:26px;font-weight:500;letter-spacing:3px;
+  }
+  .tag-sub{
+    position:absolute;left:300px;top:104px;height:60px;display:flex;align-items:center;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:26px;letter-spacing:3px;
+  }
+  .pill{
+    position:absolute;right:60px;top:104px;height:60px;display:flex;align-items:center;gap:12px;
+    background:var(--paper);border:3px solid var(--ink);padding:0 20px;box-sizing:border-box;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:22px;font-weight:500;letter-spacing:2.4px;
+  }
+  .pill .dot{width:16px;height:16px;border-radius:50%;background:var(--accent);border:2px solid var(--ink)}
+
+  /* ---------- price block ---------- */
+  .eyebrow{
+    position:absolute;left:60px;top:212px;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:26px;font-weight:500;letter-spacing:4px;color:var(--ink-70);
+  }
+  .trim{
+    position:absolute;left:60px;top:256px;height:86px;display:inline-flex;align-items:center;
+    background:var(--ink);color:var(--mint);padding:0 26px;
+    font-family:"Archivo Black",Archivo,Arial,sans-serif;
+    font-size:52px;letter-spacing:2px;transform-origin:0 50%;will-change:transform;
+  }
+  .price{position:absolute;left:56px;top:400px;height:215px}
+  .rp{
+    position:absolute;left:4px;top:40px;
+    font-family:"Archivo Black",Archivo,Arial,sans-serif;
+    font-size:86px;line-height:1;color:var(--ink);
+  }
+  .digits{position:absolute;left:186px;top:0;display:flex}
+  .dcol{width:146px;height:215px;overflow:hidden}
+  .dstrip{will-change:transform}
+  .dstrip span{
+    display:block;height:215px;line-height:215px;text-align:center;
+    font-family:"Archivo Black",Archivo,Arial,sans-serif;
+    font-size:230px;letter-spacing:-6px;color:var(--ink);
+  }
+  .burst{
+    position:absolute;left:626px;top:20px;width:300px;height:300px;border-radius:50%;
+    background:repeating-conic-gradient(var(--accent) 0 14deg,transparent 14deg 28deg);
+    opacity:.85;will-change:transform;
+  }
+  .juta{
+    position:absolute;left:660px;top:104px;height:82px;display:inline-flex;align-items:center;
+    background:var(--accent);border:4px solid var(--ink);padding:0 22px;
+    font-family:"Archivo Black",Archivo,Arial,sans-serif;
+    font-size:46px;letter-spacing:2px;color:var(--ink);
+    transform-origin:50% 50%;will-change:transform;
+  }
+  .trimline{
+    position:absolute;left:60px;top:668px;width:960px;
+    font-size:34px;font-weight:500;line-height:1.25;color:var(--ink-70);
+  }
+
+  /* ---------- the car ---------- */
+  .car{
+    position:absolute;left:40px;top:736px;width:1000px;height:500px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .car img{max-width:100%;max-height:100%;object-fit:contain;display:block;will-change:transform}
+  .ground{
+    position:absolute;left:140px;top:1188px;width:800px;height:52px;
+    background:radial-gradient(ellipse 42% 46% at 50% 50%,rgba(35,35,46,.30),transparent 72%);
+  }
+
+  /* ---------- scrolling ticker ---------- */
+  .ticker{
+    position:absolute;left:-80px;top:1250px;width:1240px;height:94px;
+    background:var(--ink);transform:rotate(-4deg);overflow:hidden;
+    display:flex;align-items:center;
+    border-top:4px solid var(--ink);border-bottom:4px solid var(--ink);
+  }
+  .ticker-inner{
+    display:flex;white-space:nowrap;will-change:transform;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:32px;font-weight:500;letter-spacing:5px;color:var(--mint);
+  }
+  .ticker-inner b{color:var(--accent);font-weight:500}
+
+  /* ---------- spec chips ---------- */
+  .chips{position:absolute;left:60px;top:1420px;width:960px;display:flex;gap:16px}
+  .chip{
+    flex:1;height:88px;display:flex;align-items:center;justify-content:center;
+    background:var(--paper);border:4px solid var(--ink);box-sizing:border-box;
+    font-family:"Archivo Black",Archivo,Arial,sans-serif;
+    font-size:34px;letter-spacing:0;color:var(--ink);
+    will-change:transform,background-color;
+  }
+
+  /* ---------- tail, safe to sit under Instagram's UI ---------- */
+  .wordmark{
+    position:absolute;left:0;right:0;top:1592px;text-align:center;
+    font-family:"Archivo Black",Archivo,Arial,sans-serif;
+    font-size:180px;line-height:1;letter-spacing:-8px;color:transparent;
+    -webkit-text-stroke:4px var(--ink-25);
+  }
+  .confetti{position:absolute;width:26px;height:26px;background:var(--ink);will-change:transform}
+</style>
+
+<div id="viewport">
+  <div id="stage">
+    <div class="grid"></div>
+
+    <div class="tag">CHANGAN</div>
+    <div class="tag-sub">/ NEVO Q05</div>
+    <div class="pill"><span class="dot"></span>100% ELECTRIC</div>
+
+    <div class="eyebrow">HARGA PELUNCURAN</div>
+    <div class="trim" id="trim">PRO</div>
+
+    <div class="price">
+      <span class="rp">Rp</span>
+      <div class="burst" id="burst"></div>
+      <div class="digits" id="digits"></div>
+      <div class="juta" id="juta">JUTA</div>
+    </div>
+    <div class="trimline" id="trimline">Roda 17 inci &middot; Kursi pengemudi elektrik 6 arah</div>
+
+    <div class="ground"></div>
+    <div class="car"><img id="carimg" src="__CAR_IMAGE__" alt="Changan Nevo Q05"></div>
+
+    <div class="ticker"><div class="ticker-inner" id="tickerInner"></div></div>
+    <div class="chips" id="chips"></div>
+
+    <div class="wordmark">NEVO Q05</div>
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  // Prices as supplied by the client; trim contents are from the official flyer.
+  const TRIMS = [
+    { name:"PRO", price:"309", accent:"#C9FF3D",
+      line:"Roda 17 inci \u00B7 Kursi pengemudi elektrik 6 arah" },
+    { name:"MAX", price:"359", accent:"#CBC9F4",
+      line:"Panoramic roof \u00B7 Kursi berventilasi \u00B7 Roda 18 inci" }
+  ];
+  const CHIPS = ["462 KM", "51,9 KWH", "ISI 15 MENIT"];
+  const TICKER = "HARGA PELUNCURAN \u2605 NEVO Q05 \u2605 100% ELECTRIC \u2605 S&K BERLAKU \u2605 ";
+
+  const DUR   = 10;    // 10 second loop
+  const BEAT  = 2.5;   // four beats: PRO, MAX, PRO, MAX
+  const BEATS = DUR / BEAT;
+  const SWAP  = 0.42;  // how long the price takes to roll into place
+  const DH    = 215;   // digit height, matches .dcol - kept close to the
+                       // glyph height so a rolling digit never leaves a gap
+  const REPEATS = 8;   // ticker copies, so one repeat can scroll seamlessly
+
+  const stage = document.getElementById('stage');
+  const trim = document.getElementById('trim');
+  const trimline = document.getElementById('trimline');
+  const juta = document.getElementById('juta');
+  const burst = document.getElementById('burst');
+  const carimg = document.getElementById('carimg');
+  const tickerInner = document.getElementById('tickerInner');
+
+  // three odometer columns, each a 0-9 strip behind a one-digit window
+  const digitsWrap = document.getElementById('digits');
+  const strips = [];
+  for (let i = 0; i < 3; i++) {
+    const col = document.createElement('div');
+    col.className = 'dcol';
+    const strip = document.createElement('div');
+    strip.className = 'dstrip';
+    for (let d = 0; d < 10; d++) {
+      const s = document.createElement('span');
+      s.textContent = String(d);
+      strip.appendChild(s);
+    }
+    col.appendChild(strip);
+    digitsWrap.appendChild(col);
+    strips.push(strip);
+  }
+
+  const chipsWrap = document.getElementById('chips');
+  const chips = CHIPS.map(text => {
+    const el = document.createElement('div');
+    el.className = 'chip';
+    el.textContent = text;
+    chipsWrap.appendChild(el);
+    return el;
+  });
+
+  for (let i = 0; i < REPEATS; i++) {
+    const s = document.createElement('span');
+    s.innerHTML = TICKER.replace(/\u2605/g, '<b>\u2605</b>');
+    tickerInner.appendChild(s);
+  }
+  let repeatWidth = 0;   // measured after layout, one copy of TICKER
+
+  const confetti = [];
+  [[880, 232, 0], [960, 300, 18], [828, 690, -12], [980, 640, 8], [72, 1180, 14]].forEach(([x, y, rot]) => {
+    const el = document.createElement('div');
+    el.className = 'confetti';
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.dataset.rot = rot;
+    stage.appendChild(el);
+    confetti.push(el);
+  });
+
+  const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+  const lerp = (a, b, t) => a + (b - a) * t;
+  // The price never overshoots - a digit that dips past its line reads as a
+  // mistake in a screenshot. It snaps hard instead, and the springy overshoot
+  // is spent on the trim stamp and the JUTA sticker where it cannot mislead.
+  const snap = (k) => 1 - Math.pow(1 - clamp(k, 0, 1), 5);
+  const back = (k) => { const c = 1.5; k = clamp(k, 0, 1); return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); };
+  const easeOut = (k) => 1 - Math.pow(1 - clamp(k, 0, 1), 3);
+
+  function render(t) {
+    t = ((t % DUR) + DUR) % DUR;
+    const beat = Math.floor(t / BEAT) % BEATS;
+    const tb = t - Math.floor(t / BEAT) * BEAT;      // seconds into this beat
+    const k = clamp(tb / SWAP, 0, 1);                // 0..1 across the swap
+    const cur = TRIMS[beat % 2], prev = TRIMS[(beat + 1) % 2];
+    const cycle = t / DUR * Math.PI * 2;
+
+    stage.style.setProperty('--accent', cur.accent);
+
+    // --- odometer: only the digits that actually change will move ---
+    const e = snap(k);
+    for (let i = 0; i < 3; i++) {
+      const from = Number(prev.price[i]), to = Number(cur.price[i]);
+      strips[i].style.transform = 'translateY(' + (-lerp(from, to, e) * DH).toFixed(2) + 'px)';
+    }
+
+    // --- trim chip stamps in, JUTA sticker pops ---
+    const stamp = easeOut(k), spring = back(k);
+    trim.textContent = k < 0.5 ? cur.name : cur.name;      // swaps behind the stamp
+    trim.style.transform = 'scale(' + (1 + 0.22 * (1 - spring)).toFixed(3) + ') rotate(' +
+      (-2 + -5 * (1 - spring)).toFixed(2) + 'deg)';
+    juta.style.transform = 'rotate(' + (8 - 7 * (1 - spring)).toFixed(2) + 'deg) scale(' +
+      (1 + 0.28 * (1 - spring)).toFixed(3) + ')';
+    trimline.textContent = cur.line;
+    trimline.style.opacity = (0.35 + 0.65 * stamp).toFixed(3);
+    trimline.style.transform = 'translateY(' + (10 * (1 - stamp)).toFixed(2) + 'px)';
+
+    // --- sunburst spins through the loop, with a kick on each beat ---
+    burst.style.transform = 'rotate(' + (t / DUR * 180 + 26 * (1 - stamp)).toFixed(2) + 'deg)';
+
+    // --- the car lands with the price, then breathes ---
+    carimg.style.transform = 'translateY(' + (Math.sin(cycle * 2) * -7).toFixed(2) +
+      'px) scale(' + (1 + 0.035 * (1 - stamp) + 0.01 * (0.5 - 0.5 * Math.cos(cycle))).toFixed(4) + ')';
+
+    // --- ticker scrolls exactly two repeats per loop, so it never jumps ---
+    if (repeatWidth) {
+      const shift = (t / DUR * 2 % 1) * repeatWidth;
+      tickerInner.style.transform = 'translateX(' + (-shift).toFixed(2) + 'px)';
+    }
+
+    // --- one chip lights up per beat ---
+    chips.forEach((el, i) => {
+      const on = i === beat % chips.length;
+      el.style.background = on ? cur.accent : 'var(--paper)';
+      el.style.transform = 'translateY(' + (on ? -6 * stamp : 0).toFixed(2) + 'px) scale(' +
+        (on ? 1 + 0.04 * stamp : 1).toFixed(3) + ')';
+    });
+
+    confetti.forEach((el, i) => {
+      const p = cycle + i * 1.7;
+      el.style.transform = 'translate(' + (Math.sin(p) * 10).toFixed(2) + 'px,' +
+        (Math.cos(p * 1.3) * 12).toFixed(2) + 'px) rotate(' +
+        (Number(el.dataset.rot) + Math.sin(p) * 18).toFixed(2) + 'deg)';
+      el.style.background = i % 2 ? cur.accent : 'var(--ink)';
+    });
+  }
+
+  function fit() {
+    stage.style.setProperty('--s', Math.min(innerWidth / 1080, innerHeight / 1920));
+  }
+  function measure() { repeatWidth = tickerInner.scrollWidth / REPEATS; }
+  addEventListener('resize', fit);
+  fit();
+  measure();
+  document.fonts.ready.then(measure);
+
+  let raf = 0;
+  const t0 = performance.now();
+  (function frame(now) { render((now - t0) / 1000); raf = requestAnimationFrame(frame); })(t0);
+
+  // deterministic frame rendering, used by the video exporter
+  window.__setTime = (t) => { if (raf) { cancelAnimationFrame(raf); raf = 0; } measure(); render(t); };
+})();
+</script>
