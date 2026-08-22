@@ -90,17 +90,17 @@
 
   /* ---------- price block ---------- */
   .eyebrow{
-    position:absolute;left:60px;top:212px;
+    position:absolute;left:60px;top:206px;
     font-family:"IBM Plex Mono",ui-monospace,monospace;
     font-size:26px;font-weight:500;letter-spacing:4px;color:var(--ink-70);
   }
   .trim{
-    position:absolute;left:60px;top:256px;height:86px;display:inline-flex;align-items:center;
+    position:absolute;left:60px;top:246px;height:86px;display:inline-flex;align-items:center;
     background:var(--ink);color:var(--mint);padding:0 24px 0 26px;
     font-family:"Archivo Black",Archivo,Arial,sans-serif;
     font-size:52px;letter-spacing:2px;transform-origin:0 50%;will-change:transform;
   }
-  .price{position:absolute;left:56px;top:400px;height:215px}
+  .price{position:absolute;left:56px;top:366px;height:215px}
   .rp{
     position:absolute;left:4px;top:40px;
     font-family:"Archivo Black",Archivo,Arial,sans-serif;
@@ -127,33 +127,38 @@
     transform-origin:50% 50%;will-change:transform;
   }
   .diff{
-    position:absolute;left:60px;top:1352px;width:960px;
-    display:flex;flex-direction:column;gap:18px;
+    position:absolute;left:60px;top:1276px;width:960px;
+    display:flex;flex-direction:column;gap:12px;
   }
-  .diff-row{display:flex;align-items:center;justify-content:space-between;gap:24px}
-  .diff-cell{display:flex;align-items:center;gap:16px;will-change:transform,opacity}
+  /* fixed columns rather than space-between: the rows vary in width, and
+     spreading them left a ragged gutter down the middle */
+  .diff-row{display:grid;grid-template-columns:500px 460px;align-items:center}
+  .diff-cell{display:flex;align-items:center;gap:14px;height:46px;will-change:transform,opacity}
   .diff-cell i{
-    flex:none;width:30px;height:30px;background:var(--accent);
+    flex:none;width:26px;height:26px;background:var(--accent);
     border:3px solid var(--ink);box-sizing:border-box;
   }
+  /* not in this trim: the marker collapses to a rule and the label steps back */
+  .diff-cell.off i{height:6px;background:var(--ink-25);border:none}
+  .diff-cell.off span{color:var(--ink-70);font-weight:500}
   .diff-cell span{
-    font-size:46px;font-weight:600;letter-spacing:-.6px;white-space:nowrap;color:var(--ink);
+    font-size:34px;font-weight:600;letter-spacing:-.4px;white-space:nowrap;color:var(--ink);
   }
 
   /* ---------- the car ---------- */
   .car{
-    position:absolute;left:40px;top:664px;width:1000px;height:510px;
+    position:absolute;left:40px;top:606px;width:1000px;height:480px;
     display:flex;align-items:center;justify-content:center;
   }
   .car img{max-width:100%;max-height:100%;object-fit:contain;display:block;will-change:transform}
   .ground{
-    position:absolute;left:140px;top:1128px;width:800px;height:52px;
+    position:absolute;left:140px;top:1046px;width:800px;height:52px;
     background:radial-gradient(ellipse 42% 46% at 50% 50%,rgba(35,35,46,.30),transparent 72%);
   }
 
   /* ---------- scrolling ticker ---------- */
   .ticker{
-    position:absolute;left:-80px;top:1176px;width:1240px;height:94px;
+    position:absolute;left:-80px;top:1120px;width:1240px;height:94px;
     background:var(--ink);transform:rotate(-4deg);overflow:hidden;
     display:flex;align-items:center;
     border-top:4px solid var(--ink);border-bottom:4px solid var(--ink);
@@ -208,17 +213,22 @@
 (() => {
   "use strict";
 
-  // Prices as supplied by the client. The trim differences are read straight off
-  // the PRO / MAX columns of the official flyer, so each list says what that
-  // variant actually carries rather than what it lacks.
+  // Prices as supplied by the client. Every row where the official flyer's PRO
+  // and MAX columns differ is listed - eight of them - and the items keep the
+  // same slots in both trims, so the three PRO does not get simply light up
+  // when MAX arrives.
   const TRIMS = [
     { name:"PRO", price:"309", accent:"#C9FF3D", features:[
-      "Kursi elektrik 6 arah", "Roda alloy 17 inci",
-      "Airbag depan & samping", "Speaker 4 titik"
+      { t:"Roda alloy 17 inci" },      { t:"Kursi elektrik 6 arah" },
+      { t:"Kursi penumpang manual" },  { t:"Airbag depan & samping" },
+      { t:"Speaker 4 titik" },         { t:"Spion lipat elektrik", off:true },
+      { t:"Power tailgate", off:true },{ t:"Panoramic glass roof", off:true }
     ]},
     { name:"MAX", price:"359", accent:"#D9D1FF", features:[
-      "Panoramic glass roof", "Roda alloy 18 inci",
-      "Kursi berventilasi", "Airbag tirai samping"
+      { t:"Roda alloy 18 inci" },      { t:"Kursi ventilasi 6 arah" },
+      { t:"Kursi penumpang elektrik" },{ t:"Airbag + tirai samping" },
+      { t:"Speaker 8 titik" },         { t:"Spion lipat elektrik" },
+      { t:"Power tailgate" },          { t:"Panoramic glass roof" }
     ]}
   ];
   const TICKER = ["HARGA PELUNCURAN", "NEVO Q05", "100% ELECTRIC", "S&K BERLAKU"];
@@ -258,7 +268,7 @@
 
   const diffWrap = document.getElementById('diff');
   const diffCells = [];
-  for (let r = 0; r < 2; r++) {
+  for (let r = 0; r < 4; r++) {
     const row = document.createElement('div');
     row.className = 'diff-row';
     for (let c = 0; c < 2; c++) {
@@ -340,8 +350,10 @@
 
     // --- the difference list deals itself out, one row at a time ---
     diffCells.forEach((cell, i) => {
-      const kr = easeOut((tb - 0.16 - i * 0.09) / 0.34);
-      cell.label.textContent = cur.features[i];
+      const item = cur.features[i];
+      const kr = easeOut((tb - 0.16 - i * 0.05) / 0.34);
+      cell.label.textContent = item.t;
+      cell.el.classList.toggle('off', !!item.off);
       cell.el.style.opacity = kr.toFixed(3);
       cell.el.style.transform = 'translateX(' + (-26 * (1 - kr)).toFixed(2) + 'px)';
     });

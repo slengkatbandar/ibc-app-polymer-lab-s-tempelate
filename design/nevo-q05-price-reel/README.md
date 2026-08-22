@@ -25,23 +25,28 @@ Aksen warna dipakai sebagai penanda varian, bukan hiasan:
 Di bagian bawah, daftar pembeda varian ikut berganti dan muncul satu per satu
 (berjeda 0,09 detik) tepat setelah harganya mendarat:
 
-| PRO | MAX |
-|---|---|
-| Kursi elektrik 6 arah &nbsp;&middot;&nbsp; Roda alloy 17 inci | Panoramic glass roof &nbsp;&middot;&nbsp; Roda alloy 18 inci |
-| Airbag depan & samping &nbsp;&middot;&nbsp; Speaker 4 titik | Kursi berventilasi &nbsp;&middot;&nbsp; Airbag tirai samping |
+Delapan baris di flyer yang isinya berbeda antara PRO dan MAX &mdash; semuanya
+masuk, tanpa kecuali:
 
-Daftarnya disusun dua baris kali dua kolom: item pertama rata kiri, item kedua
-rata kanan, jadi lebar 960 px terpakai penuh dan sisi kanan tidak menganga.
-Urutan itemnya diatur supaya yang lebih panjang selalu di kolom kiri.
+| # | PRO | MAX |
+|---|---|---|
+| 1 | Roda alloy 17 inci (225/60R17) | Roda alloy 18 inci (225/55R18) |
+| 2 | Kursi pengemudi elektrik 6 arah | + ventilasi & seat easy access |
+| 3 | Kursi penumpang manual 4 arah | Elektrik 4 arah + ventilasi |
+| 4 | Airbag depan & samping | + tirai samping |
+| 5 | Speaker 4 titik | Speaker 8 titik |
+| 6 | &mdash; | Spion lipat elektrik |
+| 7 | &mdash; | Power tailgate anti-pinch |
+| 8 | &mdash; | Panoramic glass roof |
 
-Daftar itu dibaca langsung dari kolom PRO/MAX di flyer resmi — teks flyer
-di-ekstrak beserta koordinatnya supaya kedua kolom tidak tertukar. Baris yang
-sama persis di kedua varian (mis. power tailgate, EPB with auto hold) sengaja
-tidak masuk daftar karena bukan pembeda.
+Item-itemnya menempati slot yang sama di kedua varian, jadi tiga baris yang
+tidak dimiliki PRO (6&ndash;8) tampil redup dengan penanda garis, lalu **menyala**
+begitu MAX muncul. Itu persis cerita "apa yang didapat dengan tambahan Rp50
+juta", tanpa perlu satu kata penjelas pun.
 
-Yang ikut berganti warna saat varian berpindah: sunburst di belakang stiker
-JUTA, stiker JUTA-nya sendiri, chip spesifikasi yang menyala, titik pada pil
-"100% ELECTRIC", dan serpihan konfeti.
+Daftarnya disusun empat baris kali dua kolom dengan lebar kolom tetap
+(500 px / 460 px). Sempat dicoba pakai `space-between`, tapi karena panjang tiap
+baris berbeda jauh hasilnya menyisakan celah tak beraturan di tengah.
 
 ## Elemen pop lain
 
