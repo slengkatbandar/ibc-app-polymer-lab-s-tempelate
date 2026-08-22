@@ -8,7 +8,7 @@ __FONTS__
   :root{
     --mint:#A5DBD5;
     --lime:#C9FF3D;
-    --lavender:#CBC9F4;
+    --lavender:#D9D1FF;
     --ink:#23232E;
     --paper:#F4F2EC;
     --ink-70:rgba(35,35,46,.70);
@@ -94,25 +94,33 @@ __FONTS__
     font-size:46px;letter-spacing:2px;color:var(--ink);
     transform-origin:50% 50%;will-change:transform;
   }
-  .trimline{
-    position:absolute;left:60px;top:668px;width:960px;
-    font-size:34px;font-weight:500;line-height:1.25;color:var(--ink-70);
+  .diff{position:absolute;left:60px;top:1336px;width:960px}
+  .diff-row{
+    display:flex;align-items:center;gap:20px;height:44px;
+    will-change:transform,opacity;
+  }
+  .diff-row i{
+    flex:none;width:26px;height:26px;background:var(--accent);
+    border:3px solid var(--ink);box-sizing:border-box;
+  }
+  .diff-row span{
+    font-size:40px;font-weight:600;letter-spacing:-.4px;white-space:nowrap;color:var(--ink);
   }
 
   /* ---------- the car ---------- */
   .car{
-    position:absolute;left:40px;top:736px;width:1000px;height:500px;
+    position:absolute;left:40px;top:664px;width:1000px;height:510px;
     display:flex;align-items:center;justify-content:center;
   }
   .car img{max-width:100%;max-height:100%;object-fit:contain;display:block;will-change:transform}
   .ground{
-    position:absolute;left:140px;top:1188px;width:800px;height:52px;
+    position:absolute;left:140px;top:1128px;width:800px;height:52px;
     background:radial-gradient(ellipse 42% 46% at 50% 50%,rgba(35,35,46,.30),transparent 72%);
   }
 
   /* ---------- scrolling ticker ---------- */
   .ticker{
-    position:absolute;left:-80px;top:1250px;width:1240px;height:94px;
+    position:absolute;left:-80px;top:1176px;width:1240px;height:94px;
     background:var(--ink);transform:rotate(-4deg);overflow:hidden;
     display:flex;align-items:center;
     border-top:4px solid var(--ink);border-bottom:4px solid var(--ink);
@@ -125,14 +133,6 @@ __FONTS__
   .ticker-inner b{color:var(--accent);font-weight:500}
 
   /* ---------- spec chips ---------- */
-  .chips{position:absolute;left:60px;top:1420px;width:960px;display:flex;gap:16px}
-  .chip{
-    flex:1;height:88px;display:flex;align-items:center;justify-content:center;
-    background:var(--paper);border:4px solid var(--ink);box-sizing:border-box;
-    font-family:"Archivo Black",Archivo,Arial,sans-serif;
-    font-size:34px;letter-spacing:0;color:var(--ink);
-    will-change:transform,background-color;
-  }
 
   /* ---------- tail, safe to sit under Instagram's UI ---------- */
   .wordmark{
@@ -161,13 +161,12 @@ __FONTS__
       <div class="digits" id="digits"></div>
       <div class="juta" id="juta">JUTA</div>
     </div>
-    <div class="trimline" id="trimline">Roda 17 inci &middot; Kursi pengemudi elektrik 6 arah</div>
 
     <div class="ground"></div>
     <div class="car"><img id="carimg" src="__CAR_IMAGE__" alt="Changan Nevo Q05"></div>
 
     <div class="ticker"><div class="ticker-inner" id="tickerInner"></div></div>
-    <div class="chips" id="chips"></div>
+    <div class="diff" id="diff"></div>
 
     <div class="wordmark">NEVO Q05</div>
   </div>
@@ -177,14 +176,23 @@ __FONTS__
 (() => {
   "use strict";
 
-  // Prices as supplied by the client; trim contents are from the official flyer.
+  // Prices as supplied by the client. The trim differences are read straight off
+  // the PRO / MAX columns of the official flyer, so each list says what that
+  // variant actually carries rather than what it lacks.
   const TRIMS = [
-    { name:"PRO", price:"309", accent:"#C9FF3D",
-      line:"Roda 17 inci \u00B7 Kursi pengemudi elektrik 6 arah" },
-    { name:"MAX", price:"359", accent:"#CBC9F4",
-      line:"Panoramic roof \u00B7 Kursi berventilasi \u00B7 Roda 18 inci" }
+    { name:"PRO", price:"309", accent:"#C9FF3D", features:[
+      "Roda alloy 17 inci",
+      "Kursi pengemudi elektrik 6 arah",
+      "Airbag depan & samping",
+      "Speaker 4 titik"
+    ]},
+    { name:"MAX", price:"359", accent:"#D9D1FF", features:[
+      "Panoramic glass roof",
+      "Kursi depan berventilasi",
+      "Roda alloy 18 inci",
+      "Airbag tirai + speaker 8 titik"
+    ]}
   ];
-  const CHIPS = ["462 KM", "51,9 KWH", "ISI 15 MENIT"];
   const TICKER = "HARGA PELUNCURAN \u2605 NEVO Q05 \u2605 100% ELECTRIC \u2605 S&K BERLAKU \u2605 ";
 
   const DUR   = 10;    // 10 second loop
@@ -197,7 +205,6 @@ __FONTS__
 
   const stage = document.getElementById('stage');
   const trim = document.getElementById('trim');
-  const trimline = document.getElementById('trimline');
   const juta = document.getElementById('juta');
   const burst = document.getElementById('burst');
   const carimg = document.getElementById('carimg');
@@ -221,13 +228,13 @@ __FONTS__
     strips.push(strip);
   }
 
-  const chipsWrap = document.getElementById('chips');
-  const chips = CHIPS.map(text => {
+  const diffWrap = document.getElementById('diff');
+  const diffRows = TRIMS[0].features.map(() => {
     const el = document.createElement('div');
-    el.className = 'chip';
-    el.textContent = text;
-    chipsWrap.appendChild(el);
-    return el;
+    el.className = 'diff-row';
+    el.innerHTML = '<i></i><span></span>';
+    diffWrap.appendChild(el);
+    return { el, label: el.querySelector('span') };
   });
 
   for (let i = 0; i < REPEATS; i++) {
@@ -281,9 +288,6 @@ __FONTS__
       (-2 + -5 * (1 - spring)).toFixed(2) + 'deg)';
     juta.style.transform = 'rotate(' + (8 - 7 * (1 - spring)).toFixed(2) + 'deg) scale(' +
       (1 + 0.28 * (1 - spring)).toFixed(3) + ')';
-    trimline.textContent = cur.line;
-    trimline.style.opacity = (0.35 + 0.65 * stamp).toFixed(3);
-    trimline.style.transform = 'translateY(' + (10 * (1 - stamp)).toFixed(2) + 'px)';
 
     // --- sunburst spins through the loop, with a kick on each beat ---
     burst.style.transform = 'rotate(' + (t / DUR * 180 + 26 * (1 - stamp)).toFixed(2) + 'deg)';
@@ -298,12 +302,12 @@ __FONTS__
       tickerInner.style.transform = 'translateX(' + (-shift).toFixed(2) + 'px)';
     }
 
-    // --- one chip lights up per beat ---
-    chips.forEach((el, i) => {
-      const on = i === beat % chips.length;
-      el.style.background = on ? cur.accent : 'var(--paper)';
-      el.style.transform = 'translateY(' + (on ? -6 * stamp : 0).toFixed(2) + 'px) scale(' +
-        (on ? 1 + 0.04 * stamp : 1).toFixed(3) + ')';
+    // --- the difference list deals itself out, one row at a time ---
+    diffRows.forEach((row, i) => {
+      const kr = easeOut((tb - 0.16 - i * 0.09) / 0.34);
+      row.label.textContent = cur.features[i];
+      row.el.style.opacity = kr.toFixed(3);
+      row.el.style.transform = 'translateX(' + (-26 * (1 - kr)).toFixed(2) + 'px)';
     });
 
     confetti.forEach((el, i) => {

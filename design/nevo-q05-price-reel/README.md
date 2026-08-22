@@ -17,10 +17,25 @@ yang bikin pergantian varian terasa hidup, bukan sekadar teks berganti.
 
 Aksen warna dipakai sebagai penanda varian, bukan hiasan:
 
-| Varian | Aksen | Harga | Pembeda (flyer resmi) |
-|---|---|---|---|
-| PRO | lime `#C9FF3D` | Rp309 juta | Roda 17 inci, kursi pengemudi elektrik 6 arah |
-| MAX | lavender `#CBC9F4` | Rp359 juta | Panoramic roof, kursi berventilasi, roda 18 inci |
+| Varian | Aksen | Harga |
+|---|---|---|
+| PRO | lime `#C9FF3D` | Rp309 juta |
+| MAX | lavender `#D9D1FF` | Rp359 juta |
+
+Di bagian bawah, daftar pembeda varian ikut berganti dan muncul satu per satu
+(berjeda 0,09 detik) tepat setelah harganya mendarat:
+
+| PRO | MAX |
+|---|---|
+| Roda alloy 17 inci | Panoramic glass roof |
+| Kursi pengemudi elektrik 6 arah | Kursi depan berventilasi |
+| Airbag depan & samping | Roda alloy 18 inci |
+| Speaker 4 titik | Airbag tirai + speaker 8 titik |
+
+Daftar itu dibaca langsung dari kolom PRO/MAX di flyer resmi — teks flyer
+di-ekstrak beserta koordinatnya supaya kedua kolom tidak tertukar. Baris yang
+sama persis di kedua varian (mis. power tailgate, EPB with auto hold) sengaja
+tidak masuk daftar karena bukan pembeda.
 
 Yang ikut berganti warna saat varian berpindah: sunburst di belakang stiker
 JUTA, stiker JUTA-nya sendiri, chip spesifikasi yang menyala, titik pada pil
@@ -34,7 +49,6 @@ JUTA, stiker JUTA-nya sendiri, chip spesifikasi yang menyala, titik pada pil
   100% ELECTRIC &#9733; S&K BERLAKU". Bergeser tepat dua kali panjang ulangannya
   per loop, jadi tidak pernah melompat.
 - **Sunburst** berputar 180&deg; sepanjang loop, plus sentakan kecil tiap beat.
-- **Tiga chip spesifikasi** (462 km, 51,9 kWh, isi 15 menit) menyala bergantian.
 - **Mobil** ikut "mendarat" bersama harga (skala pop) lalu bernapas pelan.
 
 ## Catatan harga
