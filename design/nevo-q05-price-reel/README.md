@@ -27,10 +27,12 @@ Di bagian bawah, daftar pembeda varian ikut berganti dan muncul satu per satu
 
 | PRO | MAX |
 |---|---|
-| Roda alloy 17 inci | Panoramic glass roof |
-| Kursi pengemudi elektrik 6 arah | Kursi depan berventilasi |
-| Airbag depan & samping | Roda alloy 18 inci |
-| Speaker 4 titik | Airbag tirai + speaker 8 titik |
+| Kursi elektrik 6 arah &nbsp;&middot;&nbsp; Roda alloy 17 inci | Panoramic glass roof &nbsp;&middot;&nbsp; Roda alloy 18 inci |
+| Airbag depan & samping &nbsp;&middot;&nbsp; Speaker 4 titik | Kursi berventilasi &nbsp;&middot;&nbsp; Airbag tirai samping |
+
+Daftarnya disusun dua baris kali dua kolom: item pertama rata kiri, item kedua
+rata kanan, jadi lebar 960 px terpakai penuh dan sisi kanan tidak menganga.
+Urutan itemnya diatur supaya yang lebih panjang selalu di kolom kiri.
 
 Daftar itu dibaca langsung dari kolom PRO/MAX di flyer resmi — teks flyer
 di-ekstrak beserta koordinatnya supaya kedua kolom tidak tertukar. Baris yang
@@ -47,7 +49,13 @@ JUTA, stiker JUTA-nya sendiri, chip spesifikasi yang menyala, titik pada pil
   turun dari 1,22 dan rotasi lurus ke &minus;2&deg;.
 - **Ticker miring** bergulir terus: "HARGA PELUNCURAN &#9733; NEVO Q05 &#9733;
   100% ELECTRIC &#9733; S&K BERLAKU". Bergeser tepat dua kali panjang ulangannya
-  per loop, jadi tidak pernah melompat.
+  per loop, jadi tidak pernah melompat. Bintangnya elemen tersendiri dengan
+  margin simetris &mdash; mengandalkan spasi di dalam string bikin flex memangkas
+  spasi terakhir sehingga bintang menempel ke kata berikutnya.
+- **Kompensasi letter-spacing.** Semua label berkotak (tag CHANGAN, pil, chip
+  varian, stiker JUTA) memangkas padding kanannya sebesar nilai letter-spacing,
+  karena letter-spacing menyisakan celah setelah huruf terakhir dan membuat
+  teks terlihat tidak center.
 - **Sunburst** berputar 180&deg; sepanjang loop, plus sentakan kecil tiap beat.
 - **Mobil** ikut "mendarat" bersama harga (skala pop) lalu bernapas pelan.
 

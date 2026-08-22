@@ -37,20 +37,20 @@ __FONTS__
   }
 
   /* ---------- masthead ---------- */
-  .tag{
-    position:absolute;left:60px;top:104px;height:60px;display:flex;align-items:center;
-    background:var(--ink);color:var(--mint);padding:0 18px;
-    font-family:"IBM Plex Mono",ui-monospace,monospace;
-    font-size:26px;font-weight:500;letter-spacing:3px;
-  }
-  .tag-sub{
-    position:absolute;left:300px;top:104px;height:60px;display:flex;align-items:center;
+  .masthead{
+    position:absolute;left:60px;top:104px;height:60px;display:flex;align-items:center;gap:22px;
     font-family:"IBM Plex Mono",ui-monospace,monospace;
     font-size:26px;letter-spacing:3px;
   }
+  /* letter-spacing adds a trailing gap after the last glyph, so every boxed
+     label pays it back out of its right padding to stay optically centred */
+  .masthead .tag{
+    height:100%;display:flex;align-items:center;
+    background:var(--ink);color:var(--mint);padding:0 15px 0 18px;font-weight:500;
+  }
   .pill{
     position:absolute;right:60px;top:104px;height:60px;display:flex;align-items:center;gap:12px;
-    background:var(--paper);border:3px solid var(--ink);padding:0 20px;box-sizing:border-box;
+    background:var(--paper);border:3px solid var(--ink);padding:0 18px 0 20px;box-sizing:border-box;
     font-family:"IBM Plex Mono",ui-monospace,monospace;
     font-size:22px;font-weight:500;letter-spacing:2.4px;
   }
@@ -64,7 +64,7 @@ __FONTS__
   }
   .trim{
     position:absolute;left:60px;top:256px;height:86px;display:inline-flex;align-items:center;
-    background:var(--ink);color:var(--mint);padding:0 26px;
+    background:var(--ink);color:var(--mint);padding:0 24px 0 26px;
     font-family:"Archivo Black",Archivo,Arial,sans-serif;
     font-size:52px;letter-spacing:2px;transform-origin:0 50%;will-change:transform;
   }
@@ -89,22 +89,23 @@ __FONTS__
   }
   .juta{
     position:absolute;left:660px;top:104px;height:82px;display:inline-flex;align-items:center;
-    background:var(--accent);border:4px solid var(--ink);padding:0 22px;
+    background:var(--accent);border:4px solid var(--ink);padding:0 20px 0 22px;
     font-family:"Archivo Black",Archivo,Arial,sans-serif;
     font-size:46px;letter-spacing:2px;color:var(--ink);
     transform-origin:50% 50%;will-change:transform;
   }
-  .diff{position:absolute;left:60px;top:1336px;width:960px}
-  .diff-row{
-    display:flex;align-items:center;gap:20px;height:44px;
-    will-change:transform,opacity;
+  .diff{
+    position:absolute;left:60px;top:1352px;width:960px;
+    display:flex;flex-direction:column;gap:18px;
   }
-  .diff-row i{
-    flex:none;width:26px;height:26px;background:var(--accent);
+  .diff-row{display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .diff-cell{display:flex;align-items:center;gap:16px;will-change:transform,opacity}
+  .diff-cell i{
+    flex:none;width:30px;height:30px;background:var(--accent);
     border:3px solid var(--ink);box-sizing:border-box;
   }
-  .diff-row span{
-    font-size:40px;font-weight:600;letter-spacing:-.4px;white-space:nowrap;color:var(--ink);
+  .diff-cell span{
+    font-size:46px;font-weight:600;letter-spacing:-.6px;white-space:nowrap;color:var(--ink);
   }
 
   /* ---------- the car ---------- */
@@ -130,7 +131,7 @@ __FONTS__
     font-family:"IBM Plex Mono",ui-monospace,monospace;
     font-size:32px;font-weight:500;letter-spacing:5px;color:var(--mint);
   }
-  .ticker-inner b{color:var(--accent);font-weight:500}
+  .ticker-inner b{color:var(--accent);font-weight:500;margin:0 22px;letter-spacing:0}
 
   /* ---------- spec chips ---------- */
 
@@ -148,8 +149,7 @@ __FONTS__
   <div id="stage">
     <div class="grid"></div>
 
-    <div class="tag">CHANGAN</div>
-    <div class="tag-sub">/ NEVO Q05</div>
+    <div class="masthead"><span class="tag">CHANGAN</span><span>/ NEVO Q05</span></div>
     <div class="pill"><span class="dot"></span>100% ELECTRIC</div>
 
     <div class="eyebrow">HARGA PELUNCURAN</div>
@@ -181,19 +181,15 @@ __FONTS__
   // variant actually carries rather than what it lacks.
   const TRIMS = [
     { name:"PRO", price:"309", accent:"#C9FF3D", features:[
-      "Roda alloy 17 inci",
-      "Kursi pengemudi elektrik 6 arah",
-      "Airbag depan & samping",
-      "Speaker 4 titik"
+      "Kursi elektrik 6 arah", "Roda alloy 17 inci",
+      "Airbag depan & samping", "Speaker 4 titik"
     ]},
     { name:"MAX", price:"359", accent:"#D9D1FF", features:[
-      "Panoramic glass roof",
-      "Kursi depan berventilasi",
-      "Roda alloy 18 inci",
-      "Airbag tirai + speaker 8 titik"
+      "Panoramic glass roof", "Roda alloy 18 inci",
+      "Kursi berventilasi", "Airbag tirai samping"
     ]}
   ];
-  const TICKER = "HARGA PELUNCURAN \u2605 NEVO Q05 \u2605 100% ELECTRIC \u2605 S&K BERLAKU \u2605 ";
+  const TICKER = ["HARGA PELUNCURAN", "NEVO Q05", "100% ELECTRIC", "S&K BERLAKU"];
 
   const DUR   = 10;    // 10 second loop
   const BEAT  = 2.5;   // four beats: PRO, MAX, PRO, MAX
@@ -229,17 +225,25 @@ __FONTS__
   }
 
   const diffWrap = document.getElementById('diff');
-  const diffRows = TRIMS[0].features.map(() => {
-    const el = document.createElement('div');
-    el.className = 'diff-row';
-    el.innerHTML = '<i></i><span></span>';
-    diffWrap.appendChild(el);
-    return { el, label: el.querySelector('span') };
-  });
+  const diffCells = [];
+  for (let r = 0; r < 2; r++) {
+    const row = document.createElement('div');
+    row.className = 'diff-row';
+    for (let c = 0; c < 2; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'diff-cell';
+      cell.innerHTML = '<i></i><span></span>';
+      row.appendChild(cell);
+      diffCells.push({ el: cell, label: cell.querySelector('span') });
+    }
+    diffWrap.appendChild(row);
+  }
 
   for (let i = 0; i < REPEATS; i++) {
     const s = document.createElement('span');
-    s.innerHTML = TICKER.replace(/\u2605/g, '<b>\u2605</b>');
+    // the star is its own element with symmetric margins - relying on spaces in
+    // the string let flex trim the trailing one and glue a star to the next word
+    s.innerHTML = TICKER.map(part => part + '<b>\u2605</b>').join('');
     tickerInner.appendChild(s);
   }
   let repeatWidth = 0;   // measured after layout, one copy of TICKER
@@ -303,11 +307,11 @@ __FONTS__
     }
 
     // --- the difference list deals itself out, one row at a time ---
-    diffRows.forEach((row, i) => {
+    diffCells.forEach((cell, i) => {
       const kr = easeOut((tb - 0.16 - i * 0.09) / 0.34);
-      row.label.textContent = cur.features[i];
-      row.el.style.opacity = kr.toFixed(3);
-      row.el.style.transform = 'translateX(' + (-26 * (1 - kr)).toFixed(2) + 'px)';
+      cell.label.textContent = cur.features[i];
+      cell.el.style.opacity = kr.toFixed(3);
+      cell.el.style.transform = 'translateX(' + (-26 * (1 - kr)).toFixed(2) + 'px)';
     });
 
     confetti.forEach((el, i) => {
